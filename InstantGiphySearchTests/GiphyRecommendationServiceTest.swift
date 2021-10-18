@@ -1,5 +1,5 @@
 //
-//  GiffyRecommendationServiceTest.swift
+//  GiphyRecommendationServiceTest.swift
 //  InstantGiphySearchTests
 //
 //  Created by Hem Sharma on 18/10/21.
@@ -8,9 +8,9 @@
 import XCTest
 @testable import InstantGiphySearch
 
-class GiffyRecommendationServiceTest: XCTestCase {
+class GiphyRecommendationServiceTest: XCTestCase {
 
-    var giffyNetworkService: GiffyRecommendationService!
+    var giphyNetworkService: GiphyRecommendationService!
     var expectation: XCTestExpectation!
     let baseURL = URL(string: "https://api.giphy.com/v1/tags/related/")!
 
@@ -19,7 +19,7 @@ class GiffyRecommendationServiceTest: XCTestCase {
         configuration.protocolClasses = [MockURLProtocol.self]
         let urlSession = URLSession.init(configuration: configuration)
 
-        giffyNetworkService = GiffyRecommendationService(session: urlSession)
+        giphyNetworkService = GiphyRecommendationService(session: urlSession)
         expectation = expectation(description: "Expectation")
     }
 
@@ -36,7 +36,7 @@ class GiffyRecommendationServiceTest: XCTestCase {
               return (response, data)
         }
 
-        giffyNetworkService.requestRecommendationsFor(searchedText: "Robot") { response, error in
+        giphyNetworkService.requestRecommendationsFor(searchedText: "Robot") { response, error in
             XCTAssertEqual(response?.count, 10)
             XCTAssertNil(error)
             self.expectation.fulfill()
@@ -55,7 +55,7 @@ class GiffyRecommendationServiceTest: XCTestCase {
               return (response, nil)
         }
 
-        giffyNetworkService.requestRecommendationsFor(searchedText: "Robot") { response, error in
+        giphyNetworkService.requestRecommendationsFor(searchedText: "Robot") { response, error in
             XCTAssertNil(response)
             XCTAssertNotNil(error)
             self.expectation.fulfill()

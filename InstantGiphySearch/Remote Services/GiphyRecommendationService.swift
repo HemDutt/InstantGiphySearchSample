@@ -7,7 +7,7 @@
 
 import Foundation
 
-class GiffyRecommendationService : GiffyRecommendationServiceProtocol{
+class GiphyRecommendationService : GiphyRecommendationServiceProtocol{
     private let apiKey = "aLg1bNA4WsJuKJuk0Zbh1M4622bnRG8D"
     private let baseURL = "https://api.giphy.com/v1/tags/related/"
     private let urlSession : URLSession
@@ -18,7 +18,7 @@ class GiffyRecommendationService : GiffyRecommendationServiceProtocol{
         urlSession = session
     }
 
-    func requestRecommendationsFor(searchedText : String, completionHandler: @escaping ([GiffyStruct]?, GiffyServiceError?) -> Void){
+    func requestRecommendationsFor(searchedText : String, completionHandler: @escaping ([GiphyStruct]?, GiphyServiceError?) -> Void){
         guard let url = getURLFor(searchText: searchedText) else {
             completionHandler(nil, .badRequest)
             return

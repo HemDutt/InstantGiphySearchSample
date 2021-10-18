@@ -12,7 +12,7 @@ class DetailViewController: UIViewController{
     @IBOutlet var textView: UITextView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     var searchedText: String?
-    var detailsPresenter: GiffyDetailPresenterProtocol?
+    var detailsPresenter: GiphyDetailPresenterProtocol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ class DetailViewController: UIViewController{
         activityIndicator.startAnimating()
         let sessionConfig = SessionUtility.getDefaultSessionConfig()
         let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
-        presenter.getGiffyDetailsFor(searchedText: searchStr, giffyNetworkService: GiffyDetailsService(session: session)) { response, error in
+        presenter.getGiphyDetailsFor(searchedText: searchStr, giphyNetworkService: GiphyDetailsService(session: session)) { response, error in
             DispatchQueue.main.async {[weak self] in
                 self?.activityIndicator.stopAnimating()
                 self?.textView.text = response

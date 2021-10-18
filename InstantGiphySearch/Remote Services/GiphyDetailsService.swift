@@ -1,5 +1,5 @@
 //
-//  GiffyDetailsService.swift
+//  GiphyDetailsService.swift
 //  InstantGiphySearch
 //
 //  Created by Hem Sharma on 18/10/21.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class GiffyDetailsService : GiffyDetailsServiceProtocol{
+class GiphyDetailsService : GiphyDetailsServiceProtocol{
     private let apiKey = "aLg1bNA4WsJuKJuk0Zbh1M4622bnRG8D"
     private let baseURL = "https://api.giphy.com/v1/gifs/search"
     private let urlSession : URLSession
@@ -18,7 +18,7 @@ class GiffyDetailsService : GiffyDetailsServiceProtocol{
         urlSession = session
     }
 
-    func requestSearchResultsFor(searchedText : String, completionHandler: @escaping (String?, GiffyServiceError?) -> Void){
+    func requestSearchResultsFor(searchedText : String, completionHandler: @escaping (String?, GiphyServiceError?) -> Void){
 
         guard let url = getURLFor(searchText: searchedText) else {
             completionHandler(nil, .badRequest)
@@ -55,9 +55,9 @@ class GiffyDetailsService : GiffyDetailsServiceProtocol{
         urlSession.finishTasksAndInvalidate()
     }
 
-    /// Construct URL with query parameters for fetching Giffy details
+    /// Construct URL with query parameters for fetching Giphy details
     /// - Parameter searchText: Text for which recommendations are requested
-    /// - Returns: URL for fetching Giffy details
+    /// - Returns: URL for fetching Giphy details
     private func getURLFor(searchText: String) -> URL?{
         guard let baseurl = URL(string: baseURL), let urlEncodedString = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return nil

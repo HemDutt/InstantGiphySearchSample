@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let recommendationsViewController = storyBoard.instantiateViewController(withIdentifier: "RecommendationsViewController") as! RecommendationsViewController
-        recommendationsViewController.giffyPresenter = GiffyRecommendationPresenter()
+        recommendationsViewController.giphyPresenter = GiphyRecommendationPresenter()
 
         let navigationController = UINavigationController()
         navigationController.viewControllers = [recommendationsViewController]

@@ -1,5 +1,5 @@
 //
-//  GiffyRecommendationPresenter.swift
+//  GiphyRecommendationPresenter.swift
 //  InstantGiphySearch
 //
 //  Created by Hem Sharma on 14/10/21.
@@ -7,15 +7,15 @@
 
 import Foundation
 
-class GiffyRecommendationPresenter : GiffyRecommendationPresenterProtocol{
+class GiphyRecommendationPresenter : GiphyRecommendationPresenterProtocol{
     
-    func getGiffyRecommendationsFor(searchedText: String, giffyNetworkService:GiffyRecommendationServiceProtocol, cachedResults: @escaping ([GiffyStruct]) -> (), remoteResults: @escaping ([GiffyStruct]) -> Void) {
+    func getGiphyRecommendationsFor(searchedText: String, giphyNetworkService:GiphyRecommendationServiceProtocol, cachedResults: @escaping ([GiphyStruct]) -> (), remoteResults: @escaping ([GiphyStruct]) -> Void) {
         //Fetch recommendations from cache
-        let cachedItems = CacheManager.cache[searchedText] as? [GiffyStruct]
+        let cachedItems = CacheManager.cache[searchedText] as? [GiphyStruct]
         cachedResults(cachedItems ?? [])
 
         //Fetch recommendations from remote
-        giffyNetworkService.requestRecommendationsFor(searchedText: searchedText) { recommendations, error in
+        giphyNetworkService.requestRecommendationsFor(searchedText: searchedText) { recommendations, error in
             guard error == nil else{
                 //Do nothing for now.
                 //We can log and propagate error later
@@ -26,7 +26,7 @@ class GiffyRecommendationPresenter : GiffyRecommendationPresenterProtocol{
         }
     }
 
-    func filterListForNewItemsOnly(oldList : [GiffyStruct], newList : [GiffyStruct]) -> [GiffyStruct]{
+    func filterListForNewItemsOnly(oldList : [GiphyStruct], newList : [GiphyStruct]) -> [GiphyStruct]{
         return Array(Set(newList).subtracting(oldList))
     }
 

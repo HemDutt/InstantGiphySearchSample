@@ -7,16 +7,16 @@
 
 import UIKit
 
-/// View Controller to allow search for a text and get recommendations from Giffy
+/// View Controller to allow search for a text and get recommendations from Giphy
 class RecommendationsViewController: UIViewController {
 
     @IBOutlet var searchBar : UISearchBar!
     @IBOutlet var tableView : UITableView!
 
-    var giffyPresenter : GiffyRecommendationPresenterProtocol?
+    var giphyPresenter : GiphyRecommendationPresenterProtocol?
 
-    private var recommendations : [GiffyStruct] = []
-    private let cellIdentifier = "GiffyResultCell"
+    private var recommendations : [GiphyStruct] = []
+    private let cellIdentifier = "GiphyResultCell"
     // If user pause typing in search bar for time = searchInvocationWait, invoke fetch recommendation routine.
     private let searchInvocationWait = 0.2    //200 ms
 
@@ -33,7 +33,7 @@ class RecommendationsViewController: UIViewController {
     /// - Parameters:
     ///   - searchedText: Text for which recommendations are requested
     ///   - recommendationList: Recommendations for searchedText
-    private func reloadTableViewFor(searchedText : String, recommendationList: [GiffyStruct]) {
+    private func reloadTableViewFor(searchedText : String, recommendationList: [GiphyStruct]) {
         DispatchQueue.main.async {
             guard searchedText == self.searchBar.text else{
                 //If search bar's current text does not match with the text for which the fetch is perfomed, discard the results.
@@ -49,7 +49,7 @@ class RecommendationsViewController: UIViewController {
     ///   - searchedText: Text for which recommendations are requested
     ///   - newElements: New recommendations for searchedText
     ///   - indeces: Indexes which needs to be inserted in table view for new recommendations
-    private func insertNewElementsFor(searchedText : String, newElements: [GiffyStruct], indeces: [IndexPath]){
+    private func insertNewElementsFor(searchedText : String, newElements: [GiphyStruct], indeces: [IndexPath]){
         DispatchQueue.main.async {
             guard searchedText == self.searchBar.text else{
                 //If search bar's current text does not match with the text for which the fetch is perfomed, discard the results.
@@ -70,13 +70,13 @@ class RecommendationsViewController: UIViewController {
             guard let self = self, searchedText == self.searchBar.text else{
                 return
             }
-            guard let presenter = self.giffyPresenter else {
+            guard let presenter = self.giphyPresenter else {
                 return
             }
             //Fetch recommendations
             let sessionConfig = SessionUtility.getDefaultSessionConfig()
             let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
-            presenter.getGiffyRecommendationsFor(searchedText: searchedText, giffyNetworkService: GiffyRecommendationService(session: session), cachedResults: { [weak self] cachedList in
+            presenter.getGiphyRecommendationsFor(searchedText: searchedText, giphyNetworkService: GiphyRecommendationService(session: session), cachedResults: { [weak self] cachedList in
                 guard let self = self, self.recommendations.count == 0 else {
                     //If list is aready populated with latest remote data.
                     //This might happen in rare case where cached list is too big as compared to latest remote data.
@@ -98,8 +98,8 @@ class RecommendationsViewController: UIViewController {
     /// - Parameters:
     ///   - remoteList: Recommendations fetched from server
     ///   - searchedText: Text for which recommendations are requested
-    private func insertNewElementsFrom(remoteList: [GiffyStruct], searchedText: String){
-        guard let presenter = self.giffyPresenter else {
+    private func insertNewElementsFrom(remoteList: [GiphyStruct], searchedText: String){
+        guard let presenter = self.giphyPresenter else {
             return
         }
         var newElements = presenter.filterListForNewItemsOnly(oldList: self.recommendations, newList: remoteList)
@@ -113,7 +113,7 @@ class RecommendationsViewController: UIViewController {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let detailViewController = storyBoard.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
         detailViewController.searchedText = searchedText
-        detailViewController.detailsPresenter = GiffyDetailPresenter()
+        detailViewController.detailsPresenter = GiphyDetailPresenter()
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
 }
