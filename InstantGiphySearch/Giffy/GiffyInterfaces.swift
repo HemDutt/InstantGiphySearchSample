@@ -15,8 +15,8 @@ struct GiffyStruct : Hashable,Decodable {
     let name : String
 }
 
-protocol GiffyRecommendationProtocol{
-    func getGiffyRecommendationsFor(searchText: String, giffyNetworkService:GiffyRecommendationServiceProtocol, cachedResults: @escaping ([GiffyStruct]) -> (), remoteResults: @escaping ([GiffyStruct]) -> Void)
+protocol GiffyRecommendationPresenterProtocol{
+    func getGiffyRecommendationsFor(searchedText: String, giffyNetworkService:GiffyRecommendationServiceProtocol, cachedResults: @escaping ([GiffyStruct]) -> (), remoteResults: @escaping ([GiffyStruct]) -> Void)
 
     func filterListForNewItemsOnly(oldList : [GiffyStruct], newList : [GiffyStruct]) -> [GiffyStruct]
 
@@ -24,13 +24,13 @@ protocol GiffyRecommendationProtocol{
 }
 
 protocol GiffyRecommendationServiceProtocol{
-    func requestRecommendationsFor(searchText : String, completionHandler: @escaping ([GiffyStruct]?, GiffyServiceError?) -> Void)
+    func requestRecommendationsFor(searchedText : String, completionHandler: @escaping ([GiffyStruct]?, GiffyServiceError?) -> Void)
 }
 
-protocol GiffyDetailProtocol{
-    func getGiffyDetailsFor(searchText: String, giffyNetworkService:GiffyDetailsServiceProtocol, completionHandler: @escaping (String?, GiffyServiceError?) -> Void)
+protocol GiffyDetailPresenterProtocol{
+    func getGiffyDetailsFor(searchedText: String, giffyNetworkService:GiffyDetailsServiceProtocol, completionHandler: @escaping (String?, GiffyServiceError?) -> Void)
 }
 
 protocol GiffyDetailsServiceProtocol{
-    func requestSearchResultsFor(searchText : String, completionHandler: @escaping (String?, GiffyServiceError?) -> Void)
+    func requestSearchResultsFor(searchedText : String, completionHandler: @escaping (String?, GiffyServiceError?) -> Void)
 }

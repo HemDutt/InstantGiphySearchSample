@@ -60,11 +60,13 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4GY-Fi-50k">
                                 <rect key="frame" x="0.0" y="32" width="414" height="864"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Hd4-Cs-TVH">
+                                <rect key="frame" x="188.5" y="434.5" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oX5-ax-noi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -72,9 +74,15 @@
                             <constraint firstItem="4GY-Fi-50k" firstAttribute="trailing" secondItem="oX5-ax-noi" secondAttribute="trailing" id="9rV-P5-mnC"/>
                             <constraint firstItem="4GY-Fi-50k" firstAttribute="top" secondItem="cwG-fD-DCM" secondAttribute="top" constant="32" id="F4p-TN-pEY"/>
                             <constraint firstAttribute="bottom" secondItem="4GY-Fi-50k" secondAttribute="bottom" id="FHj-KH-kh4"/>
+                            <constraint firstItem="Hd4-Cs-TVH" firstAttribute="centerY" secondItem="oX5-ax-noi" secondAttribute="centerY" id="XQr-Tm-nQq"/>
                             <constraint firstItem="4GY-Fi-50k" firstAttribute="leading" secondItem="oX5-ax-noi" secondAttribute="leading" id="c56-Ss-Ka6"/>
+                            <constraint firstItem="Hd4-Cs-TVH" firstAttribute="centerX" secondItem="oX5-ax-noi" secondAttribute="centerX" id="h7e-4H-9cz"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="Hd4-Cs-TVH" id="LTt-KC-ulj"/>
+                        <outlet property="textView" destination="4GY-Fi-50k" id="1FG-3W-Pcc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="agF-VS-LRX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

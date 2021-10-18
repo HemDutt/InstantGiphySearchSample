@@ -7,21 +7,21 @@
 
 import Foundation
 
-class GiffyRecommendationPresenter : GiffyRecommendationProtocol{
+class GiffyRecommendationPresenter : GiffyRecommendationPresenterProtocol{
     
-    func getGiffyRecommendationsFor(searchText: String, giffyNetworkService:GiffyRecommendationServiceProtocol, cachedResults: @escaping ([GiffyStruct]) -> (), remoteResults: @escaping ([GiffyStruct]) -> Void) {
+    func getGiffyRecommendationsFor(searchedText: String, giffyNetworkService:GiffyRecommendationServiceProtocol, cachedResults: @escaping ([GiffyStruct]) -> (), remoteResults: @escaping ([GiffyStruct]) -> Void) {
         //Fetch recommendations from cache
-        let cachedItems = CacheManager.cache[searchText] as? [GiffyStruct]
+        let cachedItems = CacheManager.cache[searchedText] as? [GiffyStruct]
         cachedResults(cachedItems ?? [])
 
         //Fetch recommendations from remote
-        giffyNetworkService.requestRecommendationsFor(searchText: searchText) { recommendations, error in
+        giffyNetworkService.requestRecommendationsFor(searchedText: searchedText) { recommendations, error in
             guard error == nil else{
                 //Do nothing for now.
                 //We can log and propagate error later
                 return
             }
-            CacheManager.cache[searchText] = recommendations
+            CacheManager.cache[searchedText] = recommendations ?? []
             remoteResults(recommendations ?? [])
         }
     }

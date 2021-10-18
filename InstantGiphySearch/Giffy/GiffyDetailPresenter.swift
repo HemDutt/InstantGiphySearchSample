@@ -7,9 +7,9 @@
 
 import Foundation
 
-class GiffyDetailPresenter: GiffyDetailProtocol{
+class GiffyDetailPresenter: GiffyDetailPresenterProtocol{
 
-    func getGiffyDetailsFor(searchText: String, giffyNetworkService: GiffyDetailsServiceProtocol, completionHandler: @escaping (String?, GiffyServiceError?) -> Void) {
-
+    func getGiffyDetailsFor(searchedText: String, giffyNetworkService: GiffyDetailsServiceProtocol, completionHandler: @escaping (String?, GiffyServiceError?) -> Void) {
+        giffyNetworkService.requestSearchResultsFor(searchedText: searchedText, completionHandler: completionHandler)
     }
 }

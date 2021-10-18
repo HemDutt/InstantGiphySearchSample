@@ -13,23 +13,28 @@ enum GiffyServiceError
     case noInternet
     case timeOut
     case badResponseData
+    case badRequest
     case emptyResponseData
     case unknownError
 }
 
 class GiffyRecommendationService : GiffyRecommendationServiceProtocol{
     private let apiKey = "aLg1bNA4WsJuKJuk0Zbh1M4622bnRG8D"
-    private let baseURL = "https://api.giphy.com/v1"
-    private let recommendationURL = "/tags/related/"
+    private let baseURL = "https://api.giphy.com/v1/tags/related/"
+    private let urlSession : URLSession
 
-    func requestRecommendationsFor(searchText : String, completionHandler: @escaping ([GiffyStruct]?, GiffyServiceError?) -> Void){
-        let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.timeoutIntervalForRequest = 10.0
-        sessionConfig.timeoutIntervalForResource = 10.0
-        let request = URLRequest(url: URL(string: "\(baseURL)\(recommendationURL)\(searchText)?api_key=\(apiKey)")!)
+    init(session : URLSession) {
+        urlSession = session
+    }
 
-        let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
-        let task = session.dataTask(with: request, completionHandler: {(data: Data?, response: URLResponse?, error: Error?) -> Void in
+    func requestRecommendationsFor(searchedText : String, completionHandler: @escaping ([GiffyStruct]?, GiffyServiceError?) -> Void){
+        guard let url = getURLFor(searchText: searchedText) else {
+            completionHandler(nil, .badRequest)
+            return
+        }
+        let request = URLRequest(url: url)
+
+        let task = urlSession.dataTask(with: request, completionHandler: {(data: Data?, response: URLResponse?, error: Error?) -> Void in
 
             guard error == nil else {
                 //Log error
@@ -60,6 +65,19 @@ class GiffyRecommendationService : GiffyRecommendationServiceProtocol{
             }
         })
         task.resume()
-        session.finishTasksAndInvalidate()
+        urlSession.finishTasksAndInvalidate()
+    }
+
+    private func getURLFor(searchText: String) -> URL?{
+        guard let baseurl = URL(string: baseURL), let urlEncodedString = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            return nil
+        }
+
+        var urlComponents = URLComponents(url: baseurl.appendingPathComponent(urlEncodedString), resolvingAgainstBaseURL: false)
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "api_key", value: apiKey),
+        ]
+
+        return urlComponents?.url
     }
 }

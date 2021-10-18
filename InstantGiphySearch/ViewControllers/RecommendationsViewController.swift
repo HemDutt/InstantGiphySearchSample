@@ -12,11 +12,11 @@ class RecommendationsViewController: UIViewController {
     @IBOutlet var searchBar : UISearchBar!
     @IBOutlet var tableView : UITableView!
 
-    var giffyPresenter : GiffyRecommendationProtocol?
+    var giffyPresenter : GiffyRecommendationPresenterProtocol?
 
     private var recommendations : [GiffyStruct] = []
     private let cellIdentifier = "GiffyResultCell"
-    private let searchInvocationWait = 0.02    //20 ms
+    private let searchInvocationWait = 0.2    //200 ms
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +24,7 @@ class RecommendationsViewController: UIViewController {
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.tableFooterView = UIView()
     }
 
     private func reloadTableViewFor(searchedText : String, recommendationList: [GiffyStruct]) {
@@ -50,34 +51,50 @@ class RecommendationsViewController: UIViewController {
         }
     }
 
-    private func fetchAndLoadResultsFor(searchText: String){
+    private func fetchAndLoadRecommendationsFor(searchedText: String){
         DispatchQueue.main.asyncAfter(deadline: .now() + searchInvocationWait) {[weak self] in
-            guard let self = self, searchText == self.searchBar.text else{
+            guard let self = self, searchedText == self.searchBar.text else{
                 return
             }
             guard let presenter = self.giffyPresenter else {
                 return
             }
             //Fetch recommendations
-            presenter.getGiffyRecommendationsFor(searchText: searchText, giffyNetworkService: GiffyRecommendationService(), cachedResults: { [weak self] cachedList in
+            let sessionConfig = SessionUtility.getDefaultSessionConfig()
+            let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
+            presenter.getGiffyRecommendationsFor(searchedText: searchedText, giffyNetworkService: GiffyRecommendationService(session: session), cachedResults: { [weak self] cachedList in
                 guard let self = self, self.recommendations.count == 0 else {
                     //If list is aready populated with latest remote data.
                     //This might happen in rare case where cached list is too big as compared to latest remote data.
                     //In this case we will just discard the cahed response.
                     return
                 }
-                self.reloadTableViewFor(searchedText: searchText, recommendationList: cachedList)
+                var cachedElements = cachedList
+                cachedElements.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
+                self.reloadTableViewFor(searchedText: searchedText, recommendationList: cachedList)
 
             }) {[weak self] remoteList in
-                guard let self = self else {
-                    return
-                }
-
-                let newElements = presenter.filterListForNewItemsOnly(oldList: self.recommendations, newList: remoteList)
-                let newIndeces = presenter.getnewIndecesAfter(initialCount: self.recommendations.count, newElementsCount: newElements.count)
-                self.insertNewElementsFor(searchedText: searchText, newElements: newElements, indeces: newIndeces)
+                self?.insertNewElementsFrom(remoteList: remoteList, searchedText: searchedText)
             }
         }
+    }
+
+    private func insertNewElementsFrom(remoteList: [GiffyStruct], searchedText: String){
+        guard let presenter = self.giffyPresenter else {
+            return
+        }
+        var newElements = presenter.filterListForNewItemsOnly(oldList: self.recommendations, newList: remoteList)
+        newElements.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
+        let newIndeces = presenter.getnewIndecesAfter(initialCount: self.recommendations.count, newElementsCount: newElements.count)
+        self.insertNewElementsFor(searchedText: searchedText, newElements: newElements, indeces: newIndeces)
+    }
+
+    private func navigateToDetailScreen(searchedText: String){
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let detailViewController = storyBoard.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        detailViewController.searchedText = searchedText
+        detailViewController.detailsPresenter = GiffyDetailPresenter()
+        self.navigationController?.pushViewController(detailViewController, animated: true)
     }
 }
 
@@ -90,7 +107,15 @@ extension RecommendationsViewController: UISearchBarDelegate{
             tableView.reloadData()
             return
         }
-        fetchAndLoadResultsFor(searchText: searchText)
+        fetchAndLoadRecommendationsFor(searchedText: searchText)
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchedText = searchBar.text, searchedText.count > 0  else {
+            return
+        }
+        navigateToDetailScreen(searchedText: searchedText)
+        searchBar.endEditing(true)
     }
 }
 
@@ -109,9 +134,8 @@ extension RecommendationsViewController: UITableViewDataSource{
 
 extension RecommendationsViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let detailViewController = storyBoard.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-        self.navigationController?.pushViewController(detailViewController, animated: true)
+        navigateToDetailScreen(searchedText: recommendations[indexPath.row].name)
+        searchBar.endEditing(true)
     }
 }
 

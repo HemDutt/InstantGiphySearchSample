@@ -1,5 +1,5 @@
 //
-//  GiffyPresenterTest.swift
+//  GiffyRecommendationPresenterTest.swift
 //  InstantGiphySearchTests
 //
 //  Created by Hem Sharma on 18/10/21.
@@ -8,21 +8,21 @@
 import XCTest
 @testable import InstantGiphySearch
 
-class GiffyPresenterTest: XCTestCase {
+class GiffyRecommendationPresenterTest: XCTestCase {
 
-    class MockGiffyNetworkService : GiffyNetworkServiceProtocol{
-        func requestRecommendationsFor(searchText: String, completionHandler: @escaping ([GiffyStruct]?, GiffyServiceError?) -> Void) {
+    class MockGiffyRecommendationService : GiffyRecommendationServiceProtocol{
+        func requestRecommendationsFor(searchedText: String, completionHandler: @escaping ([GiffyStruct]?, GiffyServiceError?) -> Void) {
             let remoteRecommendations = [GiffyStruct(name: "Tested1"), GiffyStruct(name: "Tested2"), GiffyStruct(name: "Tested3"), GiffyStruct(name: "Tested4"), GiffyStruct(name: "Tested5"), GiffyStruct(name: "Tested6")]
             completionHandler(remoteRecommendations,nil)
         }
     }
 
-    func testGetGiffyRecommendations() throws {
+    func testGetGiffyRecommendations() {
         let cachedDataExpectation = expectation(description: "Check Giffy recommendations from cached data")
         let remoteDataExpectation = expectation(description: "Check Giffy recommendations from remote data")
 
         let presenter = GiffyRecommendationPresenter()
-        presenter.getGiffyRecommendationsFor(searchText: "Test", giffyNetworkService: MockGiffyNetworkService()) { cachedResults in
+        presenter.getGiffyRecommendationsFor(searchedText: "Test", giffyNetworkService: MockGiffyRecommendationService()) { cachedResults in
             XCTAssertTrue(cachedResults.count == 0)
             cachedDataExpectation.fulfill()
         } remoteResults: { remoteResults in
@@ -33,7 +33,7 @@ class GiffyPresenterTest: XCTestCase {
         waitForExpectations(timeout: 3, handler: nil)
     }
 
-    func testGetListOfNewItemsOnly() throws {
+    func testGetListOfNewItemsOnly() {
         let cachedRecommendations = [GiffyStruct(name: "Tested1"), GiffyStruct(name: "Tested2")]
         let remoteRecommendations = [GiffyStruct(name: "Tested1"), GiffyStruct(name: "Tested2"), GiffyStruct(name: "Tested3")]
 
@@ -44,7 +44,7 @@ class GiffyPresenterTest: XCTestCase {
         XCTAssertEqual(mergedRecommendations[0].name, "Tested3")
     }
 
-    func testGetnewIndeces() throws {
+    func testGetnewIndeces() {
         let presenter = GiffyRecommendationPresenter()
         let indeces = presenter.getnewIndecesAfter(initialCount: 2, newElementsCount: 1)
         XCTAssertEqual(indeces[0].row, 2)
