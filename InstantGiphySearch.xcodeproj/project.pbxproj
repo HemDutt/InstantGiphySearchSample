@@ -27,6 +27,7 @@
 		EA14B0B9271DB0AE000BF569 /* SessionUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0B8271DB0AE000BF569 /* SessionUtility.swift */; };
 		EA14B0BB271DB575000BF569 /* MockUrlProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0BA271DB575000BF569 /* MockUrlProtocol.swift */; };
 		EA14B0BF271DBC51000BF569 /* SwiftyCacheTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0BE271DBC51000BF569 /* SwiftyCacheTest.swift */; };
+		EA14B0C3271DFCE2000BF569 /* SynchronisedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0C2271DFCE2000BF569 /* SynchronisedArray.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		EA14B0B8271DB0AE000BF569 /* SessionUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionUtility.swift; sourceTree = "<group>"; };
 		EA14B0BA271DB575000BF569 /* MockUrlProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUrlProtocol.swift; sourceTree = "<group>"; };
 		EA14B0BE271DBC51000BF569 /* SwiftyCacheTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyCacheTest.swift; sourceTree = "<group>"; };
+		EA14B0C2271DFCE2000BF569 /* SynchronisedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronisedArray.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 		EA14B063271831E2000BF569 /* InstantGiphySearch */ = {
 			isa = PBXGroup;
 			children = (
+				EA14B0C4271E0965000BF569 /* ThreadSafety */,
 				EA14B0B7271DB097000BF569 /* Utility */,
 				EA14B0A7271D4E46000BF569 /* Remote Services */,
 				EA14B09E271D49EB000BF569 /* ViewControllers */,
@@ -184,6 +187,14 @@
 				EA14B0B8271DB0AE000BF569 /* SessionUtility.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		EA14B0C4271E0965000BF569 /* ThreadSafety */ = {
+			isa = PBXGroup;
+			children = (
+				EA14B0C2271DFCE2000BF569 /* SynchronisedArray.swift */,
+			);
+			path = ThreadSafety;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA14B0B2271D8D26000BF569 /* DetailViewController.swift in Sources */,
+				EA14B0C3271DFCE2000BF569 /* SynchronisedArray.swift in Sources */,
 				EA14B0B4271D94B3000BF569 /* GiphyDetailPresenter.swift in Sources */,
 				EA14B09527183535000BF569 /* GiphyRecommendationPresenter.swift in Sources */,
 				EA14B0B9271DB0AE000BF569 /* SessionUtility.swift in Sources */,
