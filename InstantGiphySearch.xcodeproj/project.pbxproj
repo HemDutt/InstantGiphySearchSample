@@ -1,0 +1,678 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EA14B065271831E2000BF569 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B064271831E2000BF569 /* AppDelegate.swift */; };
+		EA14B067271831E2000BF569 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B066271831E2000BF569 /* SceneDelegate.swift */; };
+		EA14B069271831E2000BF569 /* RecommendationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B068271831E2000BF569 /* RecommendationsViewController.swift */; };
+		EA14B06C271831E2000BF569 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA14B06A271831E2000BF569 /* Main.storyboard */; };
+		EA14B06E271831E5000BF569 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA14B06D271831E5000BF569 /* Assets.xcassets */; };
+		EA14B071271831E5000BF569 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA14B06F271831E5000BF569 /* LaunchScreen.storyboard */; };
+		EA14B087271831E5000BF569 /* InstantGiphySearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B086271831E5000BF569 /* InstantGiphySearchUITests.swift */; };
+		EA14B09527183535000BF569 /* GiffyRecommendationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B09427183535000BF569 /* GiffyRecommendationPresenter.swift */; };
+		EA14B097271838EF000BF569 /* GiffyInterfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B096271838EF000BF569 /* GiffyInterfaces.swift */; };
+		EA14B09927185B81000BF569 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B09827185B81000BF569 /* CacheManager.swift */; };
+		EA14B09B27185DE2000BF569 /* SwiftyCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B09A27185DE2000BF569 /* SwiftyCache.swift */; };
+		EA14B0A9271D4E75000BF569 /* GiffyRecommendationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0A8271D4E75000BF569 /* GiffyRecommendationService.swift */; };
+		EA14B0AB271D6DC0000BF569 /* GiffyPresenterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0AA271D6DBF000BF569 /* GiffyPresenterTest.swift */; };
+		EA14B0AD271D8468000BF569 /* GiffyServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0AC271D8468000BF569 /* GiffyServiceTest.swift */; };
+		EA14B0B0271D8556000BF569 /* SearchSuggestion.json in Resources */ = {isa = PBXBuildFile; fileRef = EA14B0AF271D8556000BF569 /* SearchSuggestion.json */; };
+		EA14B0B2271D8D26000BF569 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0B1271D8D26000BF569 /* DetailViewController.swift */; };
+		EA14B0B4271D94B3000BF569 /* GiffyDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0B3271D94B3000BF569 /* GiffyDetailPresenter.swift */; };
+		EA14B0B6271D9717000BF569 /* GiffyDetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0B5271D9717000BF569 /* GiffyDetailsService.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EA14B078271831E5000BF569 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA14B059271831E1000BF569 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA14B060271831E2000BF569;
+			remoteInfo = InstantGiphySearch;
+		};
+		EA14B083271831E5000BF569 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA14B059271831E1000BF569 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA14B060271831E2000BF569;
+			remoteInfo = InstantGiphySearch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EA14B061271831E2000BF569 /* InstantGiphySearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstantGiphySearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA14B064271831E2000BF569 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EA14B066271831E2000BF569 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		EA14B068271831E2000BF569 /* RecommendationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsViewController.swift; sourceTree = "<group>"; };
+		EA14B06B271831E2000BF569 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EA14B06D271831E5000BF569 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EA14B070271831E5000BF569 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EA14B072271831E5000BF569 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA14B077271831E5000BF569 /* InstantGiphySearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstantGiphySearchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA14B07D271831E5000BF569 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA14B082271831E5000BF569 /* InstantGiphySearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstantGiphySearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA14B086271831E5000BF569 /* InstantGiphySearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstantGiphySearchUITests.swift; sourceTree = "<group>"; };
+		EA14B088271831E5000BF569 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA14B09427183535000BF569 /* GiffyRecommendationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiffyRecommendationPresenter.swift; sourceTree = "<group>"; };
+		EA14B096271838EF000BF569 /* GiffyInterfaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiffyInterfaces.swift; sourceTree = "<group>"; };
+		EA14B09827185B81000BF569 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		EA14B09A27185DE2000BF569 /* SwiftyCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyCache.swift; sourceTree = "<group>"; };
+		EA14B0A8271D4E75000BF569 /* GiffyRecommendationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiffyRecommendationService.swift; sourceTree = "<group>"; };
+		EA14B0AA271D6DBF000BF569 /* GiffyPresenterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiffyPresenterTest.swift; sourceTree = "<group>"; };
+		EA14B0AC271D8468000BF569 /* GiffyServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiffyServiceTest.swift; sourceTree = "<group>"; };
+		EA14B0AF271D8556000BF569 /* SearchSuggestion.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SearchSuggestion.json; sourceTree = "<group>"; };
+		EA14B0B1271D8D26000BF569 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		EA14B0B3271D94B3000BF569 /* GiffyDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiffyDetailPresenter.swift; sourceTree = "<group>"; };
+		EA14B0B5271D9717000BF569 /* GiffyDetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiffyDetailsService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EA14B05E271831E2000BF569 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA14B074271831E5000BF569 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA14B07F271831E5000BF569 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EA14B058271831E1000BF569 = {
+			isa = PBXGroup;
+			children = (
+				EA14B063271831E2000BF569 /* InstantGiphySearch */,
+				EA14B07A271831E5000BF569 /* InstantGiphySearchTests */,
+				EA14B085271831E5000BF569 /* InstantGiphySearchUITests */,
+				EA14B062271831E2000BF569 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EA14B062271831E2000BF569 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EA14B061271831E2000BF569 /* InstantGiphySearch.app */,
+				EA14B077271831E5000BF569 /* InstantGiphySearchTests.xctest */,
+				EA14B082271831E5000BF569 /* InstantGiphySearchUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EA14B063271831E2000BF569 /* InstantGiphySearch */ = {
+			isa = PBXGroup;
+			children = (
+				EA14B0A7271D4E46000BF569 /* Networking */,
+				EA14B09E271D49EB000BF569 /* ViewControllers */,
+				EA14B09D27186588000BF569 /* Giffy */,
+				EA14B09C27186571000BF569 /* Cache */,
+				EA14B064271831E2000BF569 /* AppDelegate.swift */,
+				EA14B066271831E2000BF569 /* SceneDelegate.swift */,
+				EA14B06A271831E2000BF569 /* Main.storyboard */,
+				EA14B06D271831E5000BF569 /* Assets.xcassets */,
+				EA14B06F271831E5000BF569 /* LaunchScreen.storyboard */,
+				EA14B072271831E5000BF569 /* Info.plist */,
+			);
+			path = InstantGiphySearch;
+			sourceTree = "<group>";
+		};
+		EA14B07A271831E5000BF569 /* InstantGiphySearchTests */ = {
+			isa = PBXGroup;
+			children = (
+				EA14B0AE271D8524000BF569 /* MockResponses */,
+				EA14B0AA271D6DBF000BF569 /* GiffyPresenterTest.swift */,
+				EA14B0AC271D8468000BF569 /* GiffyServiceTest.swift */,
+				EA14B07D271831E5000BF569 /* Info.plist */,
+			);
+			path = InstantGiphySearchTests;
+			sourceTree = "<group>";
+		};
+		EA14B085271831E5000BF569 /* InstantGiphySearchUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EA14B086271831E5000BF569 /* InstantGiphySearchUITests.swift */,
+				EA14B088271831E5000BF569 /* Info.plist */,
+			);
+			path = InstantGiphySearchUITests;
+			sourceTree = "<group>";
+		};
+		EA14B09C27186571000BF569 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				EA14B09A27185DE2000BF569 /* SwiftyCache.swift */,
+				EA14B09827185B81000BF569 /* CacheManager.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		EA14B09D27186588000BF569 /* Giffy */ = {
+			isa = PBXGroup;
+			children = (
+				EA14B09427183535000BF569 /* GiffyRecommendationPresenter.swift */,
+				EA14B0B3271D94B3000BF569 /* GiffyDetailPresenter.swift */,
+				EA14B096271838EF000BF569 /* GiffyInterfaces.swift */,
+			);
+			path = Giffy;
+			sourceTree = "<group>";
+		};
+		EA14B09E271D49EB000BF569 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EA14B068271831E2000BF569 /* RecommendationsViewController.swift */,
+				EA14B0B1271D8D26000BF569 /* DetailViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		EA14B0A7271D4E46000BF569 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				EA14B0A8271D4E75000BF569 /* GiffyRecommendationService.swift */,
+				EA14B0B5271D9717000BF569 /* GiffyDetailsService.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		EA14B0AE271D8524000BF569 /* MockResponses */ = {
+			isa = PBXGroup;
+			children = (
+				EA14B0AF271D8556000BF569 /* SearchSuggestion.json */,
+			);
+			path = MockResponses;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EA14B060271831E2000BF569 /* InstantGiphySearch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA14B08B271831E5000BF569 /* Build configuration list for PBXNativeTarget "InstantGiphySearch" */;
+			buildPhases = (
+				EA14B05D271831E2000BF569 /* Sources */,
+				EA14B05E271831E2000BF569 /* Frameworks */,
+				EA14B05F271831E2000BF569 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = InstantGiphySearch;
+			productName = InstantGiphySearch;
+			productReference = EA14B061271831E2000BF569 /* InstantGiphySearch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EA14B076271831E5000BF569 /* InstantGiphySearchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA14B08E271831E5000BF569 /* Build configuration list for PBXNativeTarget "InstantGiphySearchTests" */;
+			buildPhases = (
+				EA14B073271831E5000BF569 /* Sources */,
+				EA14B074271831E5000BF569 /* Frameworks */,
+				EA14B075271831E5000BF569 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EA14B079271831E5000BF569 /* PBXTargetDependency */,
+			);
+			name = InstantGiphySearchTests;
+			productName = InstantGiphySearchTests;
+			productReference = EA14B077271831E5000BF569 /* InstantGiphySearchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EA14B081271831E5000BF569 /* InstantGiphySearchUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA14B091271831E5000BF569 /* Build configuration list for PBXNativeTarget "InstantGiphySearchUITests" */;
+			buildPhases = (
+				EA14B07E271831E5000BF569 /* Sources */,
+				EA14B07F271831E5000BF569 /* Frameworks */,
+				EA14B080271831E5000BF569 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EA14B084271831E5000BF569 /* PBXTargetDependency */,
+			);
+			name = InstantGiphySearchUITests;
+			productName = InstantGiphySearchUITests;
+			productReference = EA14B082271831E5000BF569 /* InstantGiphySearchUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EA14B059271831E1000BF569 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					EA14B060271831E2000BF569 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					EA14B076271831E5000BF569 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = EA14B060271831E2000BF569;
+					};
+					EA14B081271831E5000BF569 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = EA14B060271831E2000BF569;
+					};
+				};
+			};
+			buildConfigurationList = EA14B05C271831E1000BF569 /* Build configuration list for PBXProject "InstantGiphySearch" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EA14B058271831E1000BF569;
+			productRefGroup = EA14B062271831E2000BF569 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EA14B060271831E2000BF569 /* InstantGiphySearch */,
+				EA14B076271831E5000BF569 /* InstantGiphySearchTests */,
+				EA14B081271831E5000BF569 /* InstantGiphySearchUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EA14B05F271831E2000BF569 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA14B071271831E5000BF569 /* LaunchScreen.storyboard in Resources */,
+				EA14B06E271831E5000BF569 /* Assets.xcassets in Resources */,
+				EA14B06C271831E2000BF569 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA14B075271831E5000BF569 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA14B0B0271D8556000BF569 /* SearchSuggestion.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA14B080271831E5000BF569 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EA14B05D271831E2000BF569 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA14B0B2271D8D26000BF569 /* DetailViewController.swift in Sources */,
+				EA14B0B4271D94B3000BF569 /* GiffyDetailPresenter.swift in Sources */,
+				EA14B09527183535000BF569 /* GiffyRecommendationPresenter.swift in Sources */,
+				EA14B069271831E2000BF569 /* RecommendationsViewController.swift in Sources */,
+				EA14B065271831E2000BF569 /* AppDelegate.swift in Sources */,
+				EA14B09B27185DE2000BF569 /* SwiftyCache.swift in Sources */,
+				EA14B097271838EF000BF569 /* GiffyInterfaces.swift in Sources */,
+				EA14B0A9271D4E75000BF569 /* GiffyRecommendationService.swift in Sources */,
+				EA14B0B6271D9717000BF569 /* GiffyDetailsService.swift in Sources */,
+				EA14B09927185B81000BF569 /* CacheManager.swift in Sources */,
+				EA14B067271831E2000BF569 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA14B073271831E5000BF569 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA14B0AB271D6DC0000BF569 /* GiffyPresenterTest.swift in Sources */,
+				EA14B0AD271D8468000BF569 /* GiffyServiceTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA14B07E271831E5000BF569 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA14B087271831E5000BF569 /* InstantGiphySearchUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EA14B079271831E5000BF569 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA14B060271831E2000BF569 /* InstantGiphySearch */;
+			targetProxy = EA14B078271831E5000BF569 /* PBXContainerItemProxy */;
+		};
+		EA14B084271831E5000BF569 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA14B060271831E2000BF569 /* InstantGiphySearch */;
+			targetProxy = EA14B083271831E5000BF569 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EA14B06A271831E2000BF569 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA14B06B271831E2000BF569 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EA14B06F271831E5000BF569 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA14B070271831E5000BF569 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EA14B089271831E5000BF569 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EA14B08A271831E5000BF569 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EA14B08C271831E5000BF569 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MBX335VQ56;
+				INFOPLIST_FILE = InstantGiphySearch/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hemdutt.InstantGiphySearch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EA14B08D271831E5000BF569 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MBX335VQ56;
+				INFOPLIST_FILE = InstantGiphySearch/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hemdutt.InstantGiphySearch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EA14B08F271831E5000BF569 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MBX335VQ56;
+				INFOPLIST_FILE = InstantGiphySearchTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hemdutt.InstantGiphySearchTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/InstantGiphySearch.app/InstantGiphySearch";
+			};
+			name = Debug;
+		};
+		EA14B090271831E5000BF569 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MBX335VQ56;
+				INFOPLIST_FILE = InstantGiphySearchTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hemdutt.InstantGiphySearchTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/InstantGiphySearch.app/InstantGiphySearch";
+			};
+			name = Release;
+		};
+		EA14B092271831E5000BF569 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MBX335VQ56;
+				INFOPLIST_FILE = InstantGiphySearchUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hemdutt.InstantGiphySearchUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = InstantGiphySearch;
+			};
+			name = Debug;
+		};
+		EA14B093271831E5000BF569 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MBX335VQ56;
+				INFOPLIST_FILE = InstantGiphySearchUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hemdutt.InstantGiphySearchUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = InstantGiphySearch;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EA14B05C271831E1000BF569 /* Build configuration list for PBXProject "InstantGiphySearch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA14B089271831E5000BF569 /* Debug */,
+				EA14B08A271831E5000BF569 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA14B08B271831E5000BF569 /* Build configuration list for PBXNativeTarget "InstantGiphySearch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA14B08C271831E5000BF569 /* Debug */,
+				EA14B08D271831E5000BF569 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA14B08E271831E5000BF569 /* Build configuration list for PBXNativeTarget "InstantGiphySearchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA14B08F271831E5000BF569 /* Debug */,
+				EA14B090271831E5000BF569 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA14B091271831E5000BF569 /* Build configuration list for PBXNativeTarget "InstantGiphySearchUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA14B092271831E5000BF569 /* Debug */,
+				EA14B093271831E5000BF569 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EA14B059271831E1000BF569 /* Project object */;
+}
