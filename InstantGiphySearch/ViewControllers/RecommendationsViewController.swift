@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// View Controller to allow search for a text and get recommendations from Giffy
 class RecommendationsViewController: UIViewController {
 
     @IBOutlet var searchBar : UISearchBar!
@@ -16,6 +17,7 @@ class RecommendationsViewController: UIViewController {
 
     private var recommendations : [GiffyStruct] = []
     private let cellIdentifier = "GiffyResultCell"
+    // If user pause typing in search bar for time = searchInvocationWait, invoke fetch recommendation routine.
     private let searchInvocationWait = 0.2    //200 ms
 
     override func viewDidLoad() {
@@ -27,6 +29,10 @@ class RecommendationsViewController: UIViewController {
         tableView.tableFooterView = UIView()
     }
 
+    /// Reload table view
+    /// - Parameters:
+    ///   - searchedText: Text for which recommendations are requested
+    ///   - recommendationList: Recommendations for searchedText
     private func reloadTableViewFor(searchedText : String, recommendationList: [GiffyStruct]) {
         DispatchQueue.main.async {
             guard searchedText == self.searchBar.text else{
@@ -38,6 +44,11 @@ class RecommendationsViewController: UIViewController {
         }
     }
 
+    /// Add new items in tableView without disturbing the current context of user
+    /// - Parameters:
+    ///   - searchedText: Text for which recommendations are requested
+    ///   - newElements: New recommendations for searchedText
+    ///   - indeces: Indexes which needs to be inserted in table view for new recommendations
     private func insertNewElementsFor(searchedText : String, newElements: [GiffyStruct], indeces: [IndexPath]){
         DispatchQueue.main.async {
             guard searchedText == self.searchBar.text else{
@@ -51,6 +62,9 @@ class RecommendationsViewController: UIViewController {
         }
     }
 
+
+    /// Fetch recommendations for searchedText if user pause typing in serach field for a configurable time = searchInvocationWait
+    /// - Parameter searchedText: Text for which recommendations are requested
     private func fetchAndLoadRecommendationsFor(searchedText: String){
         DispatchQueue.main.asyncAfter(deadline: .now() + searchInvocationWait) {[weak self] in
             guard let self = self, searchedText == self.searchBar.text else{
@@ -70,6 +84,7 @@ class RecommendationsViewController: UIViewController {
                     return
                 }
                 var cachedElements = cachedList
+                //Sort Alphabatically
                 cachedElements.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
                 self.reloadTableViewFor(searchedText: searchedText, recommendationList: cachedList)
 
@@ -79,11 +94,16 @@ class RecommendationsViewController: UIViewController {
         }
     }
 
+    /// Prepare new elements in remote list for insertion in table view
+    /// - Parameters:
+    ///   - remoteList: Recommendations fetched from server
+    ///   - searchedText: Text for which recommendations are requested
     private func insertNewElementsFrom(remoteList: [GiffyStruct], searchedText: String){
         guard let presenter = self.giffyPresenter else {
             return
         }
         var newElements = presenter.filterListForNewItemsOnly(oldList: self.recommendations, newList: remoteList)
+        //Sort Alphabatically
         newElements.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
         let newIndeces = presenter.getnewIndecesAfter(initialCount: self.recommendations.count, newElementsCount: newElements.count)
         self.insertNewElementsFor(searchedText: searchedText, newElements: newElements, indeces: newIndeces)

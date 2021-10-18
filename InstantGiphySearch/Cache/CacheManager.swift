@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Provides a Singleton instance for SwiftyCache
 class CacheManager{
     static let cache = SwiftyCache<String, Any>()
     private init(){

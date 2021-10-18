@@ -37,13 +37,6 @@
 			remoteGlobalIDString = EA14B060271831E2000BF569;
 			remoteInfo = InstantGiphySearch;
 		};
-		EA14B083271831E5000BF569 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EA14B059271831E1000BF569 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = EA14B060271831E2000BF569;
-			remoteInfo = InstantGiphySearch;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -57,8 +50,6 @@
 		EA14B072271831E5000BF569 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA14B077271831E5000BF569 /* InstantGiphySearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstantGiphySearchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA14B07D271831E5000BF569 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EA14B082271831E5000BF569 /* InstantGiphySearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstantGiphySearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA14B088271831E5000BF569 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA14B09427183535000BF569 /* GiffyRecommendationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiffyRecommendationPresenter.swift; sourceTree = "<group>"; };
 		EA14B096271838EF000BF569 /* GiffyInterfaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiffyInterfaces.swift; sourceTree = "<group>"; };
 		EA14B09827185B81000BF569 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
@@ -90,13 +81,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EA14B07F271831E5000BF569 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -105,7 +89,6 @@
 			children = (
 				EA14B063271831E2000BF569 /* InstantGiphySearch */,
 				EA14B07A271831E5000BF569 /* InstantGiphySearchTests */,
-				EA14B085271831E5000BF569 /* InstantGiphySearchUITests */,
 				EA14B062271831E2000BF569 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -115,7 +98,6 @@
 			children = (
 				EA14B061271831E2000BF569 /* InstantGiphySearch.app */,
 				EA14B077271831E5000BF569 /* InstantGiphySearchTests.xctest */,
-				EA14B082271831E5000BF569 /* InstantGiphySearchUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -148,14 +130,6 @@
 				EA14B07D271831E5000BF569 /* Info.plist */,
 			);
 			path = InstantGiphySearchTests;
-			sourceTree = "<group>";
-		};
-		EA14B085271831E5000BF569 /* InstantGiphySearchUITests */ = {
-			isa = PBXGroup;
-			children = (
-				EA14B088271831E5000BF569 /* Info.plist */,
-			);
-			path = InstantGiphySearchUITests;
 			sourceTree = "<group>";
 		};
 		EA14B09C27186571000BF569 /* Cache */ = {
@@ -250,24 +224,6 @@
 			productReference = EA14B077271831E5000BF569 /* InstantGiphySearchTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		EA14B081271831E5000BF569 /* InstantGiphySearchUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = EA14B091271831E5000BF569 /* Build configuration list for PBXNativeTarget "InstantGiphySearchUITests" */;
-			buildPhases = (
-				EA14B07E271831E5000BF569 /* Sources */,
-				EA14B07F271831E5000BF569 /* Frameworks */,
-				EA14B080271831E5000BF569 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				EA14B084271831E5000BF569 /* PBXTargetDependency */,
-			);
-			name = InstantGiphySearchUITests;
-			productName = InstantGiphySearchUITests;
-			productReference = EA14B082271831E5000BF569 /* InstantGiphySearchUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -281,10 +237,6 @@
 						CreatedOnToolsVersion = 12.5.1;
 					};
 					EA14B076271831E5000BF569 = {
-						CreatedOnToolsVersion = 12.5.1;
-						TestTargetID = EA14B060271831E2000BF569;
-					};
-					EA14B081271831E5000BF569 = {
 						CreatedOnToolsVersion = 12.5.1;
 						TestTargetID = EA14B060271831E2000BF569;
 					};
@@ -305,7 +257,6 @@
 			targets = (
 				EA14B060271831E2000BF569 /* InstantGiphySearch */,
 				EA14B076271831E5000BF569 /* InstantGiphySearchTests */,
-				EA14B081271831E5000BF569 /* InstantGiphySearchUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -326,13 +277,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA14B0B0271D8556000BF569 /* SearchSuggestion.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EA14B080271831E5000BF569 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,13 +313,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EA14B07E271831E5000BF569 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -383,11 +320,6 @@
 			isa = PBXTargetDependency;
 			target = EA14B060271831E2000BF569 /* InstantGiphySearch */;
 			targetProxy = EA14B078271831E5000BF569 /* PBXContainerItemProxy */;
-		};
-		EA14B084271831E5000BF569 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = EA14B060271831E2000BF569 /* InstantGiphySearch */;
-			targetProxy = EA14B083271831E5000BF569 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -609,46 +541,6 @@
 			};
 			name = Release;
 		};
-		EA14B092271831E5000BF569 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MBX335VQ56;
-				INFOPLIST_FILE = InstantGiphySearchUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hemdutt.InstantGiphySearchUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = InstantGiphySearch;
-			};
-			name = Debug;
-		};
-		EA14B093271831E5000BF569 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MBX335VQ56;
-				INFOPLIST_FILE = InstantGiphySearchUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.hemdutt.InstantGiphySearchUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = InstantGiphySearch;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -675,15 +567,6 @@
 			buildConfigurations = (
 				EA14B08F271831E5000BF569 /* Debug */,
 				EA14B090271831E5000BF569 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		EA14B091271831E5000BF569 /* Build configuration list for PBXNativeTarget "InstantGiphySearchUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				EA14B092271831E5000BF569 /* Debug */,
-				EA14B093271831E5000BF569 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

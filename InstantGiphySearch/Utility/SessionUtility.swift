@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Utility class to configure a URLSession
 class SessionUtility{
     static func getDefaultSessionConfig() -> URLSessionConfiguration{
         let sessionConfig = URLSessionConfiguration.default

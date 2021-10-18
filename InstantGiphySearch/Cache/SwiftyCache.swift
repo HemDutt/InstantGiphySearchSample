@@ -7,11 +7,19 @@
 
 import Foundation
 
+/// Reference : https://developer.apple.com/documentation/foundation/nscache
+/// NSCache is a mutable collection you use to temporarily store transient key-value pairs that are subject to eviction when resources are low.
+/// The NSCache class incorporates various auto-eviction policies, which ensure that a cache doesn’t use too much of the system’s memory. If memory is needed by other applications, these policies remove some items from the cache, minimizing its memory footprint.
+/// We can add, remove, and query items in the cache from different threads without having to lock the cache explicitely in our code.
+/// SwiftyCache is a wrapper class over NSCache to enable us store structs and other value types and lets us use any Hashable key type  without rewriting all of the underlying logic that powers NSCache.
+/// SwiftyCache is generic over any Hashable key type, and any value type.
 final class SwiftyCache<Key: Hashable, Value> {
     private let wrapped = NSCache<WrappedKey, CacheObject>()
     func insert(_ value: Value, forKey key: Key) {
         let object = CacheObject(value: value)
         let wrappedKey = WrappedKey(key)
+        // We would want the cache to not grow beyond a specified size in memory.
+        // Cost for every insertion is calculated.
         let costOfInsertion = MemoryLayout.size(ofValue: object) + MemoryLayout.size(ofValue: wrappedKey)
         wrapped.setObject(object, forKey: wrappedKey, cost:costOfInsertion)
     }
@@ -58,6 +66,8 @@ private extension SwiftyCache {
     }
 }
 
+/// Since SwiftyCache is essentially just a specialized key-value store, it’s an ideal use case for subscripting.
+/// It is possible to both retrieve and insert values in SwiftyCache using subscripts
 extension SwiftyCache {
     subscript(key: Key) -> Value? {
         get { return value(forKey: key) }

@@ -7,22 +7,13 @@
 
 import Foundation
 
-enum GiffyServiceError
-{
-    case authenticationError
-    case noInternet
-    case timeOut
-    case badResponseData
-    case badRequest
-    case emptyResponseData
-    case unknownError
-}
-
 class GiffyRecommendationService : GiffyRecommendationServiceProtocol{
     private let apiKey = "aLg1bNA4WsJuKJuk0Zbh1M4622bnRG8D"
     private let baseURL = "https://api.giphy.com/v1/tags/related/"
     private let urlSession : URLSession
 
+    /// Intialize URLSession object
+    /// - Parameter session: Injected session
     init(session : URLSession) {
         urlSession = session
     }
@@ -68,6 +59,10 @@ class GiffyRecommendationService : GiffyRecommendationServiceProtocol{
         urlSession.finishTasksAndInvalidate()
     }
 
+
+    /// Construct URL with query parameters for fetching Giffy recommendations
+    /// - Parameter searchText: Text for which recommendations are requested
+    /// - Returns: URL for fetching Giffy recommendations
     private func getURLFor(searchText: String) -> URL?{
         guard let baseurl = URL(string: baseURL), let urlEncodedString = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return nil
