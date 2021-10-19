@@ -22,10 +22,8 @@ class GiphyRecommendationPresenter : GiphyRecommendationPresenterProtocol{
                 return
             }
 
-            var sortedRecommendations = recommendations
-            sortedRecommendations?.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
-            CacheManager.cache[searchedText] = sortedRecommendations ?? []
-            remoteResults(sortedRecommendations ?? [])
+            CacheManager.cache[searchedText] = recommendations ?? []
+            remoteResults(recommendations ?? [])
         }
     }
 

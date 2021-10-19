@@ -32,6 +32,25 @@ class RecommendationsViewController: UIViewController {
         tableView.tableFooterView = UIView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        }
+    }
+
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        tableView.contentInset = .zero
+    }
+
     /// Add new items in tableView without disturbing the current context of user
     /// - Parameters:
     ///   - searchedText: Text for which recommendations are requested
@@ -88,7 +107,6 @@ class RecommendationsViewController: UIViewController {
                 guard let self = self else {
                     return
                 }
-                //No need to sort as response cached is already sorted
                 self.insertNewElementsFrom(remoteList: cachedList, oldList: itemsAlreadyPopulated, searchedText: searchedText)
                 itemsAlreadyPopulated = cachedList
 
@@ -110,10 +128,12 @@ class RecommendationsViewController: UIViewController {
         guard let presenter = self.giphyPresenter else {
             return
         }
-        let newElements = presenter.filterListForNewItemsOnly(oldList: oldList, newList: remoteList)
+        var newElements = presenter.filterListForNewItemsOnly(oldList: oldList, newList: remoteList)
         guard newElements.count > 0 else {
             return
         }
+        newElements.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
+
         let newIndeces = presenter.getnewIndecesAfter(initialCount: oldList.count, newElementsCount: newElements.count)
         self.insertNewElementsFor(searchedText: searchedText, oldList: oldList, newElements: newElements, indeces: newIndeces)
     }
