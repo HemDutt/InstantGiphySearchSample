@@ -1,4 +1,5 @@
 # InstantGiphySearchSample
+# Objective :
 Design an instant search feature that works on client side using a cache that does not exceed 10 MB of memory footprint on client.
 1. Use Giphy Search Suggestions Endpoint - this returns the recommendations for instant search based on popularity.This uses some server side algo to manage the recommendations at an aggregate level of many users.
 2. On the client side you have a page for user to input the search string with a search box and a dropdown that popup with the recommendations
