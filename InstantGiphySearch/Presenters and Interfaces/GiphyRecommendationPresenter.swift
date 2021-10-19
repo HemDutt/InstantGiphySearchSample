@@ -21,8 +21,11 @@ class GiphyRecommendationPresenter : GiphyRecommendationPresenterProtocol{
                 //We can log and propagate error later
                 return
             }
-            CacheManager.cache[searchedText] = recommendations ?? []
-            remoteResults(recommendations ?? [])
+
+            var sortedRecommendations = recommendations
+            sortedRecommendations?.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
+            CacheManager.cache[searchedText] = sortedRecommendations ?? []
+            remoteResults(sortedRecommendations ?? [])
         }
     }
 

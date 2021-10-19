@@ -16,7 +16,8 @@ class RecommendationsViewController: UIViewController {
     var giphyPresenter : GiphyRecommendationPresenterProtocol?
 
     private var recommendations : SynchronizedArray<GiphyStruct> = SynchronizedArray()
-    private let recommendationsAccessQueue = DispatchQueue(label: "SynchronizedArrayAccess", attributes: .concurrent)
+    //Serial queue to handle recommendations list update without conflict
+    private let accessQueue = DispatchQueue(label: "SynchronizedAccess")
 
     private let cellIdentifier = "GiphyResultCell"
     // If user pause typing in search bar for time = searchInvocationWait, invoke fetch recommendation routine.
@@ -36,15 +37,16 @@ class RecommendationsViewController: UIViewController {
     ///   - searchedText: Text for which recommendations are requested
     ///   - recommendationList: Recommendations for searchedText
     private func reloadTableViewFor(searchedText : String, recommendationList: [GiphyStruct]) {
-        DispatchQueue.main.async {
-            guard searchedText == self.searchBar.text else{
-                //If search bar's current text does not match with the text for which the fetch is perfomed, discard the results.
-                return
+        accessQueue.sync {
+            DispatchQueue.main.async {
+                guard searchedText == self.searchBar.text else{
+                    //If search bar's current text does not match with the text for which the fetch is perfomed, discard the results.
+                    return
+                }
+                self.recommendations.removeAll()
+                self.recommendations.append(newElements: recommendationList)
+                self.tableView.reloadData()
             }
-
-            self.recommendations.removeAll()
-            self.recommendations.append(newElements: recommendationList)
-            self.tableView.reloadData()
         }
     }
 
@@ -53,53 +55,55 @@ class RecommendationsViewController: UIViewController {
     ///   - searchedText: Text for which recommendations are requested
     ///   - newElements: New recommendations for searchedText
     ///   - indeces: Indexes which needs to be inserted in table view for new recommendations
-    private func insertNewElementsFor(searchedText : String, newElements: [GiphyStruct], indeces: [IndexPath]){
-        DispatchQueue.main.async {
-            guard searchedText == self.searchBar.text else{
-                //If search bar's current text does not match with the text for which the fetch is perfomed, discard the results.
+    private func insertNewElementsFor(searchedText : String, oldList: [GiphyStruct], newElements: [GiphyStruct], indeces: [IndexPath]){
+        accessQueue.sync {
+            guard self.recommendations.allItems() == oldList else{
+                //If old list do not match, discard the results.
                 return
             }
-
-            self.recommendations.append(newElements: newElements)
-            self.tableView.performBatchUpdates({
-                self.tableView.insertRows(at: indeces, with: .automatic)
-            }, completion: nil)
+            //Perform UI operations
+            DispatchQueue.main.async {
+                guard searchedText == self.searchBar.text else{
+                    //If search bar's current text does not match with the text for which the fetch is perfomed, discard the results.
+                    return
+                }
+                self.recommendations.append(newElements: newElements)
+                self.tableView.performBatchUpdates({
+                    self.tableView.insertRows(at: indeces, with: .automatic)
+                }, completion: nil)
+            }
         }
     }
-
 
     /// Fetch recommendations for searchedText if user pause typing in serach field for a configurable time = searchInvocationWait
     /// - Parameter searchedText: Text for which recommendations are requested
     private func fetchAndLoadRecommendationsFor(searchedText: String){
         DispatchQueue.main.asyncAfter(deadline: .now() + searchInvocationWait) {[weak self] in
-            guard let self = self, searchedText == self.searchBar.text else{
+            guard let self = self, searchedText == self.searchBar.text, let presenter = self.giphyPresenter else{
                 return
             }
-            guard let presenter = self.giphyPresenter else {
+            guard searchedText.count > 0  else {
+                self.tableView.reloadData()
                 return
             }
+            
             //Fetch recommendations
             let sessionConfig = SessionUtility.getDefaultSessionConfig()
             let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
-            self.recommendations.removeAll()
+            var cachedItems : [GiphyStruct] = []
             presenter.getGiphyRecommendationsFor(searchedText: searchedText, giphyNetworkService: GiphyRecommendationService(session: session), cachedResults: { [weak self] cachedList in
-
-                guard let self = self, self.recommendations.count == 0 else {
-                    //If list is aready populated with latest remote data.
-                    //This might happen in rare case where cached list is too big as compared to latest remote data.
-                    //In this case we will just discard the cahed response.
+                guard let self = self else {
                     return
                 }
-                var sortedCachedList = cachedList
-                //Sort Alphabatically
-                sortedCachedList.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
-                self.reloadTableViewFor(searchedText: searchedText, recommendationList: sortedCachedList)
+                //No need to sort as response cached is already sorted
+                cachedItems = cachedList
+                self.reloadTableViewFor(searchedText: searchedText, recommendationList: cachedList)
 
             }) {[weak self] remoteList in
-                guard let self = self, let oldList = self.recommendations.allItems() else{
+                guard let self = self else{
                     return
                 }
-                self.insertNewElementsFrom(remoteList: remoteList, oldList: oldList, searchedText: searchedText)
+                self.insertNewElementsFrom(remoteList: remoteList, oldList: cachedItems, searchedText: searchedText)
             }
         }
     }
@@ -112,11 +116,9 @@ class RecommendationsViewController: UIViewController {
         guard let presenter = self.giphyPresenter else {
             return
         }
-        var newElements = presenter.filterListForNewItemsOnly(oldList: oldList, newList: remoteList)
-        //Sort Alphabatically
-        newElements.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
+        let newElements = presenter.filterListForNewItemsOnly(oldList: oldList, newList: remoteList)
         let newIndeces = presenter.getnewIndecesAfter(initialCount: oldList.count, newElementsCount: newElements.count)
-        self.insertNewElementsFor(searchedText: searchedText, newElements: newElements, indeces: newIndeces)
+        self.insertNewElementsFor(searchedText: searchedText, oldList: oldList, newElements: newElements, indeces: newIndeces)
     }
 
     private func navigateToDetailScreen(searchedText: String){
@@ -131,12 +133,6 @@ class RecommendationsViewController: UIViewController {
 extension RecommendationsViewController: UISearchBarDelegate{
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //Clear recommendations when text change
-        guard searchText.count > 0  else {
-            self.recommendations.removeAll()
-            tableView.reloadData()
-            return
-        }
         fetchAndLoadRecommendationsFor(searchedText: searchText)
     }
 
