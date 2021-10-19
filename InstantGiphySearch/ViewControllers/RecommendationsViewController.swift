@@ -32,45 +32,37 @@ class RecommendationsViewController: UIViewController {
         tableView.tableFooterView = UIView()
     }
 
-    /// Reload table view
-    /// - Parameters:
-    ///   - searchedText: Text for which recommendations are requested
-    ///   - recommendationList: Recommendations for searchedText
-    private func reloadTableViewFor(searchedText : String, recommendationList: [GiphyStruct]) {
-        accessQueue.sync {
-            DispatchQueue.main.async {
-                guard searchedText == self.searchBar.text else{
-                    //If search bar's current text does not match with the text for which the fetch is perfomed, discard the results.
-                    return
-                }
-                self.recommendations.removeAll()
-                self.recommendations.append(newElements: recommendationList)
-                self.tableView.reloadData()
-            }
-        }
-    }
-
     /// Add new items in tableView without disturbing the current context of user
     /// - Parameters:
     ///   - searchedText: Text for which recommendations are requested
+    ///   - oldList: oldList in which newElements should be appended
     ///   - newElements: New recommendations for searchedText
     ///   - indeces: Indexes which needs to be inserted in table view for new recommendations
     private func insertNewElementsFor(searchedText : String, oldList: [GiphyStruct], newElements: [GiphyStruct], indeces: [IndexPath]){
-        accessQueue.sync {
-            guard self.recommendations.allItems() == oldList else{
+        accessQueue.sync {[weak self] in
+            guard let self = self, self.recommendations.allItems() == oldList else{
                 //If old list do not match, discard the results.
                 return
             }
             //Perform UI operations
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [self] in
                 guard searchedText == self.searchBar.text else{
                     //If search bar's current text does not match with the text for which the fetch is perfomed, discard the results.
                     return
                 }
-                self.recommendations.append(newElements: newElements)
                 self.tableView.performBatchUpdates({
+                    self.recommendations.append(newElements: newElements)
                     self.tableView.insertRows(at: indeces, with: .automatic)
                 }, completion: nil)
+            }
+        }
+    }
+
+    private func clearRecommendations(){
+        accessQueue.sync {[weak self] in
+            self?.recommendations.removeAll()
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
             }
         }
     }
@@ -82,28 +74,30 @@ class RecommendationsViewController: UIViewController {
             guard let self = self, searchedText == self.searchBar.text, let presenter = self.giphyPresenter else{
                 return
             }
+            //Clear old recommendations
+            self.clearRecommendations()
             guard searchedText.count > 0  else {
-                self.tableView.reloadData()
                 return
             }
             
             //Fetch recommendations
             let sessionConfig = SessionUtility.getDefaultSessionConfig()
             let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
-            var cachedItems : [GiphyStruct] = []
+            var itemsAlreadyPopulated : [GiphyStruct] = []
             presenter.getGiphyRecommendationsFor(searchedText: searchedText, giphyNetworkService: GiphyRecommendationService(session: session), cachedResults: { [weak self] cachedList in
                 guard let self = self else {
                     return
                 }
                 //No need to sort as response cached is already sorted
-                cachedItems = cachedList
-                self.reloadTableViewFor(searchedText: searchedText, recommendationList: cachedList)
+                self.insertNewElementsFrom(remoteList: cachedList, oldList: itemsAlreadyPopulated, searchedText: searchedText)
+                itemsAlreadyPopulated = cachedList
 
             }) {[weak self] remoteList in
                 guard let self = self else{
                     return
                 }
-                self.insertNewElementsFrom(remoteList: remoteList, oldList: cachedItems, searchedText: searchedText)
+                self.insertNewElementsFrom(remoteList: remoteList, oldList: itemsAlreadyPopulated, searchedText: searchedText)
+                itemsAlreadyPopulated = remoteList
             }
         }
     }
@@ -117,6 +111,9 @@ class RecommendationsViewController: UIViewController {
             return
         }
         let newElements = presenter.filterListForNewItemsOnly(oldList: oldList, newList: remoteList)
+        guard newElements.count > 0 else {
+            return
+        }
         let newIndeces = presenter.getnewIndecesAfter(initialCount: oldList.count, newElementsCount: newElements.count)
         self.insertNewElementsFor(searchedText: searchedText, oldList: oldList, newElements: newElements, indeces: newIndeces)
     }
