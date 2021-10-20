@@ -17,7 +17,7 @@ class GiphyRecommendationPresenter : GiphyRecommendationPresenterProtocol{
     
     func getGiphyRecommendationsFor(searchedText: String, cachedResults: @escaping ([GiphyRecommendationModel], _ indeces:[IndexPath]) -> (), remoteResults: @escaping ([GiphyRecommendationModel], _ newIndeces:[IndexPath]) -> Void, error: @escaping(GiphyServiceError?) -> Void) {
         //Fetch recommendations from cache
-        let cachedItems = CacheManager.cache[searchedText]
+        let cachedItems = CacheManager.shared.cache[searchedText]
         if let cachedList = cachedItems as? [GiphyRecommendationModel], !cachedList.isEmpty{
             let indeces = GiphyUtility.getnewIndecesAfter(initialCount: 0, newElementsCount: cachedList.count)
             cachedResults(cachedList, indeces)
@@ -41,9 +41,9 @@ class GiphyRecommendationPresenter : GiphyRecommendationPresenterProtocol{
             consolidatedRecommendations.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
             let cost = GiphyUtility.getCostForInsertingGiphyRecommendations(list: consolidatedRecommendations)
             //Clean old entries
-            CacheManager.cache.removeValue(forKey: searchedText)
+            CacheManager.shared.cache.removeValue(forKey: searchedText)
             //Store new values
-            CacheManager.cache.insert(consolidatedRecommendations, forKey: searchedText, insertionCost: cost)
+            CacheManager.shared.cache.insert(consolidatedRecommendations, forKey: searchedText, insertionCost: cost)
 
             //Update VC
             newElements.sort(by: {$0.name.lowercased() < $1.name.lowercased()})

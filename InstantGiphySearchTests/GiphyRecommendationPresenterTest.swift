@@ -42,7 +42,7 @@ class GiphyRecommendationPresenterTest: XCTestCase {
         //Not setting expectation for cached data as the block should not be called if no cached data available
         let list = [GiphyRecommendationModel(name: "CachedValue")]
         let cost = GiphyUtility.getCostForInsertingGiphyRecommendations(list: list)
-        CacheManager.cache.insert(list, forKey: "Test", insertionCost:cost )
+        CacheManager.shared.cache.insert(list, forKey: "Test", insertionCost:cost )
 
         let remoteDataExpectation = expectation(description: "Check Giphy recommendations from remote data")
         let cachedDataExpectation = expectation(description: "Check Giphy recommendations from cached data")

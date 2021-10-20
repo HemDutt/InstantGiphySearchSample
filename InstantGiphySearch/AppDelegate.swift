@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        CacheManager.cache.setCostLimit(limit: 10485760) //10MB
+        CacheManager.shared.cache.setCostLimit(limit: 10485760) //10MB
         return true
     }
 

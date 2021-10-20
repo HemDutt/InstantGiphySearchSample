@@ -8,8 +8,13 @@
 import Foundation
 
 /// Provides a Singleton instance for SwiftyCache
+protocol CacheManagerProtocol {
+    var cache : SwiftyCache<String, Any> { get }
+}
+
 class CacheManager{
-    static let cache = SwiftyCache<String, Any>()
+    static let shared = CacheManager()
+    let cache = SwiftyCache<String, Any>()
     private init(){
         //Do nothing
     }
