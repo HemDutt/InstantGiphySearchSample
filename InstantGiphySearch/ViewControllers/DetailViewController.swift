@@ -7,7 +7,11 @@
 
 import UIKit
 
-class DetailViewController: UIViewController{
+protocol RecommendationDetailsProtocol {
+    var searchedText: String? { get set }
+}
+
+class DetailViewController: UIViewController, RecommendationDetailsProtocol{
 
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -21,13 +25,19 @@ class DetailViewController: UIViewController{
             return
         }
         activityIndicator.startAnimating()
-        let sessionConfig = SessionUtility.getDefaultSessionConfig()
-        let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
-        presenter.getGiphyDetailsFor(searchedText: searchStr, giphyNetworkService: GiphyDetailsService(session: session)) { response, error in
+        presenter.getGiphyDetailsFor(searchedText: searchStr) { response, error in
             DispatchQueue.main.async {[weak self] in
                 self?.activityIndicator.stopAnimating()
                 self?.textView.text = response
             }
+        }
+    }
+
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        guard let _ = parent else {
+            detailsPresenter?.cancelAllPendingRequests()
+            return
         }
     }
 }

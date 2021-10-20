@@ -11,6 +11,8 @@ class GiphyRecommendationService : GiphyRecommendationServiceProtocol{
     private let apiKey = "aLg1bNA4WsJuKJuk0Zbh1M4622bnRG8D"
     private let baseURL = "https://api.giphy.com/v1/tags/related/"
     private let urlSession : URLSession
+    private var task: URLSessionDataTask?
+
 
     /// Intialize URLSession object
     /// - Parameter session: Injected session
@@ -25,11 +27,17 @@ class GiphyRecommendationService : GiphyRecommendationServiceProtocol{
         }
         let request = URLRequest(url: url)
 
-        let task = urlSession.dataTask(with: request, completionHandler: {(data: Data?, response: URLResponse?, error: Error?) -> Void in
+        task?.cancel()
+        task = urlSession.dataTask(with: request, completionHandler: {(data: Data?, response: URLResponse?, error: Error?) -> Void in
 
             guard error == nil, let statusCode = (response as? HTTPURLResponse)?.statusCode else {
                 //For now just call completion with unknown error
-                completionHandler(nil, .unknownError)
+                if((error as NSError?)?.code == -999){
+                    completionHandler(nil, .cancelled)
+                }else{
+                    completionHandler(nil, .unknownError)
+                }
+
                 return
             }
 
@@ -55,10 +63,12 @@ class GiphyRecommendationService : GiphyRecommendationServiceProtocol{
                 completionHandler(nil, .unknownError)
             }
         })
-        task.resume()
-        urlSession.finishTasksAndInvalidate()
+        task?.resume()
     }
 
+    func cancelAllPendingRequests() {
+        urlSession.invalidateAndCancel()
+    }
 
     /// Construct URL with query parameters for fetching Giffy recommendations
     /// - Parameter searchText: Text for which recommendations are requested

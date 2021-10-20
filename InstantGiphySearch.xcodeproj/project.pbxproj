@@ -30,6 +30,8 @@
 		EA14B0C3271DFCE2000BF569 /* SynchronisedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0C2271DFCE2000BF569 /* SynchronisedArray.swift */; };
 		EA53793A271FF94100230AB0 /* GiphyUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537939271FF94100230AB0 /* GiphyUtility.swift */; };
 		EA53793C272017F100230AB0 /* GiphyUtilityTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53793B272017F100230AB0 /* GiphyUtilityTest.swift */; };
+		EA53793F2720318F00230AB0 /* LaunchViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53793E2720318F00230AB0 /* LaunchViewBuilder.swift */; };
+		EA537941272038E900230AB0 /* RecommendationDetailViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537940272038E900230AB0 /* RecommendationDetailViewBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 		EA14B0C2271DFCE2000BF569 /* SynchronisedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronisedArray.swift; sourceTree = "<group>"; };
 		EA537939271FF94100230AB0 /* GiphyUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyUtility.swift; sourceTree = "<group>"; };
 		EA53793B272017F100230AB0 /* GiphyUtilityTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyUtilityTest.swift; sourceTree = "<group>"; };
+		EA53793E2720318F00230AB0 /* LaunchViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewBuilder.swift; sourceTree = "<group>"; };
+		EA537940272038E900230AB0 /* RecommendationDetailViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationDetailViewBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +115,7 @@
 		EA14B063271831E2000BF569 /* InstantGiphySearch */ = {
 			isa = PBXGroup;
 			children = (
+				EA53793D2720317A00230AB0 /* Builders */,
 				EA14B0C4271E0965000BF569 /* ThreadSafety */,
 				EA14B0B7271DB097000BF569 /* Utility */,
 				EA14B0A7271D4E46000BF569 /* Remote Services */,
@@ -201,6 +206,15 @@
 				EA14B0C2271DFCE2000BF569 /* SynchronisedArray.swift */,
 			);
 			path = ThreadSafety;
+			sourceTree = "<group>";
+		};
+		EA53793D2720317A00230AB0 /* Builders */ = {
+			isa = PBXGroup;
+			children = (
+				EA53793E2720318F00230AB0 /* LaunchViewBuilder.swift */,
+				EA537940272038E900230AB0 /* RecommendationDetailViewBuilder.swift */,
+			);
+			path = Builders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,8 +328,10 @@
 				EA14B09B27185DE2000BF569 /* SwiftyCache.swift in Sources */,
 				EA14B097271838EF000BF569 /* GiphyInterfaces.swift in Sources */,
 				EA14B0A9271D4E75000BF569 /* GiphyRecommendationService.swift in Sources */,
+				EA537941272038E900230AB0 /* RecommendationDetailViewBuilder.swift in Sources */,
 				EA53793A271FF94100230AB0 /* GiphyUtility.swift in Sources */,
 				EA14B0B6271D9717000BF569 /* GiphyDetailsService.swift in Sources */,
+				EA53793F2720318F00230AB0 /* LaunchViewBuilder.swift in Sources */,
 				EA14B09927185B81000BF569 /* CacheManager.swift in Sources */,
 				EA14B067271831E2000BF569 /* SceneDelegate.swift in Sources */,
 			);

@@ -9,7 +9,18 @@ import Foundation
 
 class GiphyDetailPresenter: GiphyDetailPresenterProtocol{
 
-    func getGiphyDetailsFor(searchedText: String, giphyNetworkService: GiphyDetailsServiceProtocol, completionHandler: @escaping (String?, GiphyServiceError?) -> Void) {
+    private let giphyNetworkService : GiphyDetailsServiceProtocol
+
+    init(networkService: GiphyDetailsServiceProtocol) {
+        giphyNetworkService = networkService
+    }
+
+    func getGiphyDetailsFor(searchedText: String, completionHandler: @escaping (String?, GiphyServiceError?) -> Void) {
         giphyNetworkService.requestSearchResultsFor(searchedText: searchedText, completionHandler: completionHandler)
     }
+
+    func cancelAllPendingRequests() {
+        giphyNetworkService.cancelAllPendingRequests()
+    }
 }
+

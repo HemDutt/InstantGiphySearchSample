@@ -12,7 +12,6 @@ class RecommendationsViewController: UIViewController {
 
     @IBOutlet weak var searchBar : UISearchBar!
     @IBOutlet weak var tableView : UITableView!
-
     var giphyPresenter : GiphyRecommendationPresenterProtocol?
 
     private var recommendations : SynchronizedArray<GiphyStruct> = SynchronizedArray()
@@ -20,6 +19,7 @@ class RecommendationsViewController: UIViewController {
     private let cellIdentifier = "GiphyResultCell"
     // If user pause typing in search bar for time = searchInvocationWait, invoke fetch recommendation routine.
     private let searchInvocationWait = 0.2    //200 ms
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +37,14 @@ class RecommendationsViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        guard let _ = parent else {
+            giphyPresenter?.cancelAllPendingRequests()
+            return
+        }
     }
 
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -92,24 +100,24 @@ class RecommendationsViewController: UIViewController {
             }
             
             //Fetch recommendations
-            let sessionConfig = SessionUtility.getDefaultSessionConfig()
-            let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
-            presenter.getGiphyRecommendationsFor(searchedText: searchedText, giphyNetworkService: GiphyRecommendationService(session: session), cachedResults: { [weak self] cachedItems, indeces  in
+            presenter.getGiphyRecommendationsFor(searchedText: searchedText) { [weak self] cachedItems, indeces in
                 self?.insertNewElementsFor(searchedText: searchedText, timeStamp: timeStamp, newElements: cachedItems, indeces: indeces)
-            }) {[weak self] remoteList, indeces  in
+            } remoteResults: { [weak self] remoteList, indeces in
                 self?.insertNewElementsFor(searchedText: searchedText, timeStamp: timeStamp, newElements: remoteList, indeces: indeces)
+            } error: { error in
+                print(error as Any)
             }
         }
     }
 
     private func navigateToDetailScreen(searchedText: String){
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        guard let detailViewController = storyBoard.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController else{
-            print("DetailViewController can't be instantiated")
+        guard var viewController = RecommendationDetailViewBuilder().buildView() as? RecommendationDetailsProtocol else {
             return
         }
-        detailViewController.searchedText = searchedText
-        detailViewController.detailsPresenter = GiphyDetailPresenter()
+        viewController.searchedText = searchedText
+        guard let detailViewController = viewController as? UIViewController else {
+            return
+        }
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
 }

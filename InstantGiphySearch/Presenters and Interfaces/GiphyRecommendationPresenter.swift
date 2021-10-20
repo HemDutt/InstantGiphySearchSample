@@ -8,8 +8,14 @@
 import Foundation
 
 class GiphyRecommendationPresenter : GiphyRecommendationPresenterProtocol{
+
+    private let giphyNetworkService: GiphyRecommendationServiceProtocol
+
+    init(networkService: GiphyRecommendationServiceProtocol) {
+        giphyNetworkService = networkService
+    }
     
-    func getGiphyRecommendationsFor(searchedText: String, giphyNetworkService:GiphyRecommendationServiceProtocol, cachedResults: @escaping ([GiphyStruct], _ indeces:[IndexPath]) -> (), remoteResults: @escaping ([GiphyStruct], _ newIndeces:[IndexPath]) -> Void) {
+    func getGiphyRecommendationsFor(searchedText: String, cachedResults: @escaping ([GiphyStruct], _ indeces:[IndexPath]) -> (), remoteResults: @escaping ([GiphyStruct], _ newIndeces:[IndexPath]) -> Void, error: @escaping(GiphyServiceError?) -> Void) {
         //Fetch recommendations from cache
         let cachedItems = CacheManager.cache[searchedText]
         if let cachedList = cachedItems as? [GiphyStruct], !cachedList.isEmpty{
@@ -18,10 +24,9 @@ class GiphyRecommendationPresenter : GiphyRecommendationPresenterProtocol{
         }
 
         //Fetch recommendations from remote
-        giphyNetworkService.requestRecommendationsFor(searchedText: searchedText) { recommendations, error in
-            guard error == nil, let remoteRecommendations = recommendations else{
-                //Do nothing for now.
-                //We can log and propagate error later
+        giphyNetworkService.requestRecommendationsFor(searchedText: searchedText) { recommendations, err in
+            guard err == nil, let remoteRecommendations = recommendations else{
+                error(err)
                 return
             }
             let cachedResults = cachedItems as? [GiphyStruct] ?? []
@@ -45,5 +50,9 @@ class GiphyRecommendationPresenter : GiphyRecommendationPresenterProtocol{
             let newIndeces = GiphyUtility.getnewIndecesAfter(initialCount: cachedResults.count, newElementsCount: newElements.count)
             remoteResults(newElements, newIndeces)
         }
+    }
+
+    func cancelAllPendingRequests() {
+        giphyNetworkService.cancelAllPendingRequests()
     }
 }

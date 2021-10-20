@@ -17,6 +17,7 @@ enum GiphyServiceError
     case badRequest
     case emptyResponseData
     case unknownError
+    case cancelled
 }
 
 struct SearchSuggestions : Decodable {
@@ -37,7 +38,8 @@ protocol GiphyRecommendationPresenterProtocol{
     ///   - giphyNetworkService: A service object to perform the remote fetch
     ///   - cachedResults: Recommendation list fetched from local cache
     ///   - remoteResults: Recommendation list fetched from remote server
-    func getGiphyRecommendationsFor(searchedText: String, giphyNetworkService:GiphyRecommendationServiceProtocol, cachedResults: @escaping ([GiphyStruct], _ indeces:[IndexPath]) -> (), remoteResults: @escaping ([GiphyStruct], _ newIndeces:[IndexPath]) -> Void)
+    func getGiphyRecommendationsFor(searchedText: String, cachedResults: @escaping ([GiphyStruct], _ indeces:[IndexPath]) -> Void, remoteResults: @escaping ([GiphyStruct], _ newIndeces:[IndexPath]) -> Void, error: @escaping(GiphyServiceError?) -> Void)
+    func cancelAllPendingRequests()
 }
 
 /// GiphyRecommendationServiceProtocol declares function for a GiphyRecommendationService
@@ -48,6 +50,7 @@ protocol GiphyRecommendationServiceProtocol{
     ///   - searchedText: Text for which recommendations are requested
     ///   - completionHandler: A completion block with parsed response data and error optionals
     func requestRecommendationsFor(searchedText : String, completionHandler: @escaping ([GiphyStruct]?, GiphyServiceError?) -> Void)
+    func cancelAllPendingRequests()
 }
 
 /// GiphyDetailPresenterProtocol  declares functions for Giphy details presenter
@@ -58,7 +61,8 @@ protocol GiphyDetailPresenterProtocol{
     ///   - searchedText: Text for which detail is requested
     ///   - giphyNetworkService: A service object to perform the remote fetch
     ///   - completionHandler: A completion block with parsed response data and error optionals
-    func getGiphyDetailsFor(searchedText: String, giphyNetworkService:GiphyDetailsServiceProtocol, completionHandler: @escaping (String?, GiphyServiceError?) -> Void)
+    func getGiphyDetailsFor(searchedText: String, completionHandler: @escaping (String?, GiphyServiceError?) -> Void)
+    func cancelAllPendingRequests()
 }
 
 /// GiphyDetailsServiceProtocol declares function for a GiphyDetailsService
@@ -69,4 +73,5 @@ protocol GiphyDetailsServiceProtocol{
     ///   - searchedText: Text for which detail is requested
     ///   - completionHandler: A completion block with parsed response data and error optionals
     func requestSearchResultsFor(searchedText : String, completionHandler: @escaping (String?, GiphyServiceError?) -> Void)
+    func cancelAllPendingRequests()
 }

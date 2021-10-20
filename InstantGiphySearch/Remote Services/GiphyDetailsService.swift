@@ -8,6 +8,7 @@
 import Foundation
 
 class GiphyDetailsService : GiphyDetailsServiceProtocol{
+
     private let apiKey = "aLg1bNA4WsJuKJuk0Zbh1M4622bnRG8D"
     private let baseURL = "https://api.giphy.com/v1/gifs/search"
     private let urlSession : URLSession
@@ -52,6 +53,10 @@ class GiphyDetailsService : GiphyDetailsServiceProtocol{
         })
         task.resume()
         urlSession.finishTasksAndInvalidate()
+    }
+
+    func cancelAllPendingRequests() {
+        urlSession.invalidateAndCancel()
     }
 
     /// Construct URL with query parameters for fetching Giphy details
