@@ -11,9 +11,13 @@ import XCTest
 class GiphyRecommendationPresenterTest: XCTestCase {
 
     class MockGiphyRecommendationService : GiphyRecommendationServiceProtocol{
-        func requestRecommendationsFor(searchedText: String, completionHandler: @escaping ([GiphyStruct]?, GiphyServiceError?) -> Void) {
-            let remoteRecommendations = [GiphyStruct(name: "Tested1"), GiphyStruct(name: "Tested2"), GiphyStruct(name: "Tested3"), GiphyStruct(name: "Tested4"), GiphyStruct(name: "Tested5"), GiphyStruct(name: "Tested6")]
+        func requestRecommendationsFor(searchedText: String, completionHandler: @escaping ([GiphyRecommendationModel]?, GiphyServiceError?) -> Void) {
+            let remoteRecommendations = [GiphyRecommendationModel(name: "Tested1"), GiphyRecommendationModel(name: "Tested2"), GiphyRecommendationModel(name: "Tested3"), GiphyRecommendationModel(name: "Tested4"), GiphyRecommendationModel(name: "Tested5"), GiphyRecommendationModel(name: "Tested6")]
             completionHandler(remoteRecommendations,nil)
+        }
+
+        func cancelAllPendingRequests() {
+
         }
     }
 
@@ -21,12 +25,14 @@ class GiphyRecommendationPresenterTest: XCTestCase {
         //Not setting expectation for cached data as the block should not be called if no cached data available
         let remoteDataExpectation = expectation(description: "Check Giphy recommendations from remote data")
 
-        let presenter = GiphyRecommendationPresenter()
-        presenter.getGiphyRecommendationsFor(searchedText: "SomeText", giphyNetworkService: MockGiphyRecommendationService()) { cachedResults, indeces in
+        let presenter = GiphyRecommendationPresenter(networkService: MockGiphyRecommendationService())
+        presenter.getGiphyRecommendationsFor(searchedText: "SomeText") { cachedResults, indeces in
             XCTAssertTrue(cachedResults.count == 0)
         } remoteResults: { remoteResults, indeces in
             XCTAssertTrue(remoteResults.count == 6)
             remoteDataExpectation.fulfill()
+        } error: { err in
+            XCTAssert(true)
         }
 
         waitForExpectations(timeout: 2, handler: nil)
@@ -34,21 +40,23 @@ class GiphyRecommendationPresenterTest: XCTestCase {
 
     func testGetGiphyRecommendationsWithCache() {
         //Not setting expectation for cached data as the block should not be called if no cached data available
-        let list = [GiphyStruct(name: "CachedValue")]
+        let list = [GiphyRecommendationModel(name: "CachedValue")]
         let cost = GiphyUtility.getCostForInsertingGiphyRecommendations(list: list)
         CacheManager.cache.insert(list, forKey: "Test", insertionCost:cost )
 
         let remoteDataExpectation = expectation(description: "Check Giphy recommendations from remote data")
         let cachedDataExpectation = expectation(description: "Check Giphy recommendations from cached data")
 
-        let presenter = GiphyRecommendationPresenter()
-        presenter.getGiphyRecommendationsFor(searchedText: "Test", giphyNetworkService: MockGiphyRecommendationService()) { cachedResults, indeces in
+        let presenter = GiphyRecommendationPresenter(networkService: MockGiphyRecommendationService())
+        presenter.getGiphyRecommendationsFor(searchedText: "Test") { cachedResults, indeces in
             XCTAssertTrue(cachedResults.count == 1)
-            XCTAssertEqual(cachedResults, [GiphyStruct(name: "CachedValue")])
+            XCTAssertEqual(cachedResults, [GiphyRecommendationModel(name: "CachedValue")])
             cachedDataExpectation.fulfill()
         } remoteResults: { remoteResults, indeces in
             XCTAssertTrue(remoteResults.count == 6)
             remoteDataExpectation.fulfill()
+        } error: { err in
+            XCTAssert(true)
         }
 
         waitForExpectations(timeout: 2, handler: nil)

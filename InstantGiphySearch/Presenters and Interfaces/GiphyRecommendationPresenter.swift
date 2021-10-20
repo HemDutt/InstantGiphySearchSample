@@ -15,10 +15,10 @@ class GiphyRecommendationPresenter : GiphyRecommendationPresenterProtocol{
         giphyNetworkService = networkService
     }
     
-    func getGiphyRecommendationsFor(searchedText: String, cachedResults: @escaping ([GiphyStruct], _ indeces:[IndexPath]) -> (), remoteResults: @escaping ([GiphyStruct], _ newIndeces:[IndexPath]) -> Void, error: @escaping(GiphyServiceError?) -> Void) {
+    func getGiphyRecommendationsFor(searchedText: String, cachedResults: @escaping ([GiphyRecommendationModel], _ indeces:[IndexPath]) -> (), remoteResults: @escaping ([GiphyRecommendationModel], _ newIndeces:[IndexPath]) -> Void, error: @escaping(GiphyServiceError?) -> Void) {
         //Fetch recommendations from cache
         let cachedItems = CacheManager.cache[searchedText]
-        if let cachedList = cachedItems as? [GiphyStruct], !cachedList.isEmpty{
+        if let cachedList = cachedItems as? [GiphyRecommendationModel], !cachedList.isEmpty{
             let indeces = GiphyUtility.getnewIndecesAfter(initialCount: 0, newElementsCount: cachedList.count)
             cachedResults(cachedList, indeces)
         }
@@ -29,7 +29,7 @@ class GiphyRecommendationPresenter : GiphyRecommendationPresenterProtocol{
                 error(err)
                 return
             }
-            let cachedResults = cachedItems as? [GiphyStruct] ?? []
+            let cachedResults = cachedItems as? [GiphyRecommendationModel] ?? []
             var newElements = GiphyUtility.filterListForNewItemsOnly(oldList: cachedResults, newList: remoteRecommendations)
             guard !newElements.isEmpty else {
                 //If no new results fetched fromm remote, no need to update VC or Cache.

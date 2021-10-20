@@ -14,7 +14,7 @@ class RecommendationsViewController: UIViewController {
     @IBOutlet weak var tableView : UITableView!
     var giphyPresenter : GiphyRecommendationPresenterProtocol?
 
-    private var recommendations : SynchronizedArray<GiphyStruct> = SynchronizedArray()
+    private var recommendations : SynchronizedArray<GiphyRecommendationModel> = SynchronizedArray()
     private var latestSearchTimeStamp : String = ""
     private let cellIdentifier = "GiphyResultCell"
     // If user pause typing in search bar for time = searchInvocationWait, invoke fetch recommendation routine.
@@ -60,10 +60,9 @@ class RecommendationsViewController: UIViewController {
     /// Add new items in tableView without disturbing the current context of user
     /// - Parameters:
     ///   - searchedText: Text for which recommendations are requested
-    ///   - oldList: oldList in which newElements should be appended
     ///   - newElements: New recommendations for searchedText
     ///   - indeces: Indexes which needs to be inserted in table view for new recommendations
-    private func insertNewElementsFor(searchedText : String, timeStamp: String, newElements: [GiphyStruct], indeces: [IndexPath]){
+    private func insertNewElementsFor(searchedText : String, timeStamp: String, newElements: [GiphyRecommendationModel], indeces: [IndexPath]){
         //Perform Batch updates
         DispatchQueue.main.async { [weak self] in
             guard let self = self, timeStamp == self.latestSearchTimeStamp  else{

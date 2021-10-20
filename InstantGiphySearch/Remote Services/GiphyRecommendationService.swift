@@ -20,7 +20,7 @@ class GiphyRecommendationService : GiphyRecommendationServiceProtocol{
         urlSession = session
     }
 
-    func requestRecommendationsFor(searchedText : String, completionHandler: @escaping ([GiphyStruct]?, GiphyServiceError?) -> Void){
+    func requestRecommendationsFor(searchedText : String, completionHandler: @escaping ([GiphyRecommendationModel]?, GiphyServiceError?) -> Void){
         guard let url = getURLFor(searchText: searchedText) else {
             completionHandler(nil, .badRequest)
             return
@@ -47,7 +47,7 @@ class GiphyRecommendationService : GiphyRecommendationServiceProtocol{
                 if let data = data {
                     do {
                         let decoder = JSONDecoder()
-                        let searchSuggestions = try decoder.decode(SearchSuggestions.self, from: data)
+                        let searchSuggestions = try decoder.decode(SearchRecommendationsSuggestionsModel.self, from: data)
                         completionHandler(searchSuggestions.data,nil)
                     } catch {
                         completionHandler(nil, .badResponseData)

@@ -11,14 +11,14 @@ import XCTest
 class GiphyUtilityTest: XCTestCase {
 
     func testCostOfInsertion(){
-        let list = [GiphyStruct(name: "ValidValue")]
+        let list = [GiphyRecommendationModel(name: "ValidValue")]
         let cost = GiphyUtility.getCostForInsertingGiphyRecommendations(list: list)
         XCTAssertEqual(cost, 160)
     }
 
     func testGetListOfNewItemsOnly() {
-        let cachedRecommendations = [GiphyStruct(name: "Tested1"), GiphyStruct(name: "Tested2")]
-        let remoteRecommendations = [GiphyStruct(name: "Tested1"), GiphyStruct(name: "Tested2"), GiphyStruct(name: "Tested3")]
+        let cachedRecommendations = [GiphyRecommendationModel(name: "Tested1"), GiphyRecommendationModel(name: "Tested2")]
+        let remoteRecommendations = [GiphyRecommendationModel(name: "Tested1"), GiphyRecommendationModel(name: "Tested2"), GiphyRecommendationModel(name: "Tested3")]
 
         let mergedRecommendations = GiphyUtility.filterListForNewItemsOnly(oldList: cachedRecommendations, newList: remoteRecommendations)
 

@@ -12,7 +12,7 @@ class SwiftyCacheTest: XCTestCase {
 
     func testLimitExceedForCache(){
         CacheManager.cache.setCostLimit(limit: 100)
-        let list = [GiphyStruct(name: "ValidValue")]
+        let list = [GiphyRecommendationModel(name: "ValidValue")]
         let cost = GiphyUtility.getCostForInsertingGiphyRecommendations(list: list)
         CacheManager.cache.insert(list, forKey: "Key", insertionCost:cost )
         let value = CacheManager.cache["Key"]
@@ -21,26 +21,26 @@ class SwiftyCacheTest: XCTestCase {
 
     func testWithValidLimitForCache(){
         CacheManager.cache.setCostLimit(limit: 200)
-        let list = [GiphyStruct(name: "ValidValue")]
+        let list = [GiphyRecommendationModel(name: "ValidValue")]
         let cost = GiphyUtility.getCostForInsertingGiphyRecommendations(list: list)
         CacheManager.cache.insert(list, forKey: "Key", insertionCost:cost )
-        let value = CacheManager.cache["Key"] as! [GiphyStruct]
-        XCTAssertEqual(value, [GiphyStruct(name: "ValidValue")])
+        let value = CacheManager.cache["Key"] as! [GiphyRecommendationModel]
+        XCTAssertEqual(value, [GiphyRecommendationModel(name: "ValidValue")])
     }
 
     func testCacheCleanup(){
         CacheManager.cache.setCostLimit(limit: 300)
-        let list = [GiphyStruct(name: "ValidValue")]
+        let list = [GiphyRecommendationModel(name: "ValidValue")]
         let cost = GiphyUtility.getCostForInsertingGiphyRecommendations(list: list)
         CacheManager.cache.insert(list, forKey: "Key", insertionCost:cost )
-        let value = CacheManager.cache["Key"] as! [GiphyStruct]
-        XCTAssertEqual(value, [GiphyStruct(name: "ValidValue")])
+        let value = CacheManager.cache["Key"] as! [GiphyRecommendationModel]
+        XCTAssertEqual(value, [GiphyRecommendationModel(name: "ValidValue")])
 
-        let newList = [GiphyStruct(name: "UpdatedValidValue")]
+        let newList = [GiphyRecommendationModel(name: "UpdatedValidValue")]
         let newCost = GiphyUtility.getCostForInsertingGiphyRecommendations(list: newList)
         CacheManager.cache.insert(newList, forKey: "Key1", insertionCost:newCost)
-        let newValue = CacheManager.cache["Key1"] as! [GiphyStruct]
-        XCTAssertEqual(newValue, [GiphyStruct(name: "UpdatedValidValue")])
+        let newValue = CacheManager.cache["Key1"] as! [GiphyRecommendationModel]
+        XCTAssertEqual(newValue, [GiphyRecommendationModel(name: "UpdatedValidValue")])
 
         let oldCachedValue = CacheManager.cache["Key"]
         XCTAssertNil(oldCachedValue)

@@ -20,12 +20,12 @@ enum GiphyServiceError
     case cancelled
 }
 
-struct SearchSuggestions : Decodable {
-    let data : [GiphyStruct]
+struct SearchRecommendationsSuggestionsModel : Decodable {
+    let data : [GiphyRecommendationModel]
 }
 
 /// Structure to hold parsed values of recommendations
-struct GiphyStruct : Hashable,Decodable {
+struct GiphyRecommendationModel : Hashable,Decodable {
     let name : String
 }
 
@@ -38,7 +38,7 @@ protocol GiphyRecommendationPresenterProtocol{
     ///   - giphyNetworkService: A service object to perform the remote fetch
     ///   - cachedResults: Recommendation list fetched from local cache
     ///   - remoteResults: Recommendation list fetched from remote server
-    func getGiphyRecommendationsFor(searchedText: String, cachedResults: @escaping ([GiphyStruct], _ indeces:[IndexPath]) -> Void, remoteResults: @escaping ([GiphyStruct], _ newIndeces:[IndexPath]) -> Void, error: @escaping(GiphyServiceError?) -> Void)
+    func getGiphyRecommendationsFor(searchedText: String, cachedResults: @escaping ([GiphyRecommendationModel], _ indeces:[IndexPath]) -> Void, remoteResults: @escaping ([GiphyRecommendationModel], _ newIndeces:[IndexPath]) -> Void, error: @escaping(GiphyServiceError?) -> Void)
     func cancelAllPendingRequests()
 }
 
@@ -49,7 +49,7 @@ protocol GiphyRecommendationServiceProtocol{
     /// - Parameters:
     ///   - searchedText: Text for which recommendations are requested
     ///   - completionHandler: A completion block with parsed response data and error optionals
-    func requestRecommendationsFor(searchedText : String, completionHandler: @escaping ([GiphyStruct]?, GiphyServiceError?) -> Void)
+    func requestRecommendationsFor(searchedText : String, completionHandler: @escaping ([GiphyRecommendationModel]?, GiphyServiceError?) -> Void)
     func cancelAllPendingRequests()
 }
 

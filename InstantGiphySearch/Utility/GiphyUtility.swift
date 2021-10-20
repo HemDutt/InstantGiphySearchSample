@@ -7,12 +7,12 @@
 
 import Foundation
 
-class GiphyUtility{
+struct GiphyUtility{
 
     /// Calculate cost of insertion in Cache for an array of GiphyStruct
     /// - Parameter list: An array of GiphyStruct
     /// - Returns: Cost of insertion in cache
-    static func getCostForInsertingGiphyRecommendations(list: [GiphyStruct]) -> Int{
+    static func getCostForInsertingGiphyRecommendations(list: [GiphyRecommendationModel]) -> Int{
         var costOfInsertion = 0
         for item in list {
             costOfInsertion += MemoryLayout.size(ofValue: item.name) * item.name.count
@@ -24,7 +24,7 @@ class GiphyUtility{
     /// - Parameters:
     ///   - oldList: Old list containg objects of type GiphyStruct
     ///   - newList: New list containg objects of type GiphyStruct
-    static func filterListForNewItemsOnly(oldList : [GiphyStruct], newList : [GiphyStruct]) -> [GiphyStruct]{
+    static func filterListForNewItemsOnly(oldList : [GiphyRecommendationModel], newList : [GiphyRecommendationModel]) -> [GiphyRecommendationModel]{
         guard !oldList.isEmpty else {
             return newList
         }
@@ -44,6 +44,8 @@ class GiphyUtility{
         return indeces
     }
 
+    /// Creates a timestamp
+    /// - Returns: timestamp
     static func getTimeStammp() -> String{
         let date = Date()
         let formatter = DateFormatter()

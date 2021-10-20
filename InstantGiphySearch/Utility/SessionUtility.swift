@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// Utility class to configure a URLSession
-class SessionUtility{
+/// Utility  to configure a URLSession
+struct SessionUtility{
     static func getDefaultSessionConfig() -> URLSessionConfiguration{
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.timeoutIntervalForRequest = 10.0

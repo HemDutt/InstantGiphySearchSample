@@ -116,11 +116,11 @@
 			isa = PBXGroup;
 			children = (
 				EA53793D2720317A00230AB0 /* Builders */,
-				EA14B0C4271E0965000BF569 /* ThreadSafety */,
+				EA14B0C4271E0965000BF569 /* ThreadSafe */,
 				EA14B0B7271DB097000BF569 /* Utility */,
+				EA14B09D27186588000BF569 /* Presenters and Interfaces */,
 				EA14B0A7271D4E46000BF569 /* Remote Services */,
 				EA14B09E271D49EB000BF569 /* ViewControllers */,
-				EA14B09D27186588000BF569 /* Presenters and Interfaces */,
 				EA14B09C27186571000BF569 /* Cache */,
 				EA14B064271831E2000BF569 /* AppDelegate.swift */,
 				EA14B066271831E2000BF569 /* SceneDelegate.swift */,
@@ -200,12 +200,12 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		EA14B0C4271E0965000BF569 /* ThreadSafety */ = {
+		EA14B0C4271E0965000BF569 /* ThreadSafe */ = {
 			isa = PBXGroup;
 			children = (
 				EA14B0C2271DFCE2000BF569 /* SynchronisedArray.swift */,
 			);
-			path = ThreadSafety;
+			path = ThreadSafe;
 			sourceTree = "<group>";
 		};
 		EA53793D2720317A00230AB0 /* Builders */ = {
