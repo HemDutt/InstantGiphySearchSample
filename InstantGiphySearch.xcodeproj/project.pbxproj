@@ -118,8 +118,9 @@
 				EA53793D2720317A00230AB0 /* Builders */,
 				EA14B0C4271E0965000BF569 /* ThreadSafe */,
 				EA14B0B7271DB097000BF569 /* Utility */,
-				EA14B09D27186588000BF569 /* Presenters and Interfaces */,
 				EA14B0A7271D4E46000BF569 /* Remote Services */,
+				EA53794227205C6100230AB0 /* Interfaces */,
+				EA14B09D27186588000BF569 /* Presenters and Interfaces */,
 				EA14B09E271D49EB000BF569 /* ViewControllers */,
 				EA14B09C27186571000BF569 /* Cache */,
 				EA14B064271831E2000BF569 /* AppDelegate.swift */,
@@ -159,7 +160,6 @@
 			children = (
 				EA14B09427183535000BF569 /* GiphyRecommendationPresenter.swift */,
 				EA14B0B3271D94B3000BF569 /* GiphyDetailPresenter.swift */,
-				EA14B096271838EF000BF569 /* GiphyInterfaces.swift */,
 			);
 			path = "Presenters and Interfaces";
 			sourceTree = "<group>";
@@ -215,6 +215,14 @@
 				EA537940272038E900230AB0 /* RecommendationDetailViewBuilder.swift */,
 			);
 			path = Builders;
+			sourceTree = "<group>";
+		};
+		EA53794227205C6100230AB0 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				EA14B096271838EF000BF569 /* GiphyInterfaces.swift */,
+			);
+			path = Interfaces;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

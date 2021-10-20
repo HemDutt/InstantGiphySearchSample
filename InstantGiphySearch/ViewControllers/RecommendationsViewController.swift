@@ -86,8 +86,9 @@ class RecommendationsViewController: UIViewController {
 
     /// Fetch recommendations for searchedText if user pause typing in serach field for a configurable time = searchInvocationWait
     /// - Parameter searchedText: Text for which recommendations are requested
+    /// - Parameter timeStamp: Timestamp when the searchedText was typed
     private func fetchAndLoadRecommendationsFor(searchedText: String, timeStamp: String){
-        DispatchQueue.main.asyncAfter(deadline: .now() + searchInvocationWait) {[weak self] in
+        DispatchQueue.global().asyncAfter(deadline: .now() + searchInvocationWait){[weak self] in
             guard let self = self, timeStamp == self.latestSearchTimeStamp, let presenter = self.giphyPresenter else{
                 //Discard searches with old timestamp.
                 return
