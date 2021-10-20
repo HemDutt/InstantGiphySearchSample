@@ -27,12 +27,12 @@ class GiphyRecommendationService : GiphyRecommendationServiceProtocol{
 
         let task = urlSession.dataTask(with: request, completionHandler: {(data: Data?, response: URLResponse?, error: Error?) -> Void in
 
-            guard error == nil else {
-                //Log error
+            guard error == nil, let statusCode = (response as? HTTPURLResponse)?.statusCode else {
+                //For now just call completion with unknown error
+                completionHandler(nil, .unknownError)
                 return
             }
 
-            let statusCode = (response as! HTTPURLResponse).statusCode
             switch statusCode {
             case 200..<300:
                 //Parse data

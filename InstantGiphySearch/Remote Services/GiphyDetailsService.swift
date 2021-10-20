@@ -28,12 +28,11 @@ class GiphyDetailsService : GiphyDetailsServiceProtocol{
 
         let task = urlSession.dataTask(with: request, completionHandler: {(data: Data?, response: URLResponse?, error: Error?) -> Void in
 
-            guard error == nil else {
+            guard error == nil, let statusCode = (response as? HTTPURLResponse)?.statusCode else {
                 //Log error
                 return
             }
 
-            let statusCode = (response as! HTTPURLResponse).statusCode
             switch statusCode {
             case 200..<300:
                 //Parse data

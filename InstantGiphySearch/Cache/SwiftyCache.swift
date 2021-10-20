@@ -15,13 +15,12 @@ import Foundation
 /// SwiftyCache is generic over any Hashable key type, and any value type.
 final class SwiftyCache<Key: Hashable, Value> {
     private let wrapped = NSCache<WrappedKey, CacheObject>()
-    func insert(_ value: Value, forKey key: Key) {
+    func insert(_ value: Value, forKey key: Key, insertionCost: Int) {
         let object = CacheObject(value: value)
         let wrappedKey = WrappedKey(key)
         // We would want the cache to not grow beyond a specified size in memory.
         // Cost for every insertion is calculated.
-        let costOfInsertion = MemoryLayout.size(ofValue: object) + MemoryLayout.size(ofValue: wrappedKey)
-        wrapped.setObject(object, forKey: wrappedKey, cost:costOfInsertion)
+        wrapped.setObject(object, forKey: wrappedKey, cost:insertionCost)
     }
 
     func value(forKey key: Key) -> Value? {
@@ -67,19 +66,9 @@ private extension SwiftyCache {
 }
 
 /// Since SwiftyCache is essentially just a specialized key-value store, it’s an ideal use case for subscripting.
-/// It is possible to both retrieve and insert values in SwiftyCache using subscripts
+/// We are limiting subscript for only getting values as we want to enforce cost of insertion while adding a new value
 extension SwiftyCache {
     subscript(key: Key) -> Value? {
         get { return value(forKey: key) }
-        set {
-            guard let value = newValue else {
-                // If nil was assigned using our subscript,
-                // then we remove any value for that key:
-                removeValue(forKey: key)
-                return
-            }
-
-            insert(value, forKey: key)
-        }
     }
 }

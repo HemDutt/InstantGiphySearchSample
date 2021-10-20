@@ -28,6 +28,8 @@
 		EA14B0BB271DB575000BF569 /* MockUrlProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0BA271DB575000BF569 /* MockUrlProtocol.swift */; };
 		EA14B0BF271DBC51000BF569 /* SwiftyCacheTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0BE271DBC51000BF569 /* SwiftyCacheTest.swift */; };
 		EA14B0C3271DFCE2000BF569 /* SynchronisedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA14B0C2271DFCE2000BF569 /* SynchronisedArray.swift */; };
+		EA53793A271FF94100230AB0 /* GiphyUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA537939271FF94100230AB0 /* GiphyUtility.swift */; };
+		EA53793C272017F100230AB0 /* GiphyUtilityTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53793B272017F100230AB0 /* GiphyUtilityTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		EA14B0BA271DB575000BF569 /* MockUrlProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUrlProtocol.swift; sourceTree = "<group>"; };
 		EA14B0BE271DBC51000BF569 /* SwiftyCacheTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyCacheTest.swift; sourceTree = "<group>"; };
 		EA14B0C2271DFCE2000BF569 /* SynchronisedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronisedArray.swift; sourceTree = "<group>"; };
+		EA537939271FF94100230AB0 /* GiphyUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyUtility.swift; sourceTree = "<group>"; };
+		EA53793B272017F100230AB0 /* GiphyUtilityTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyUtilityTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,7 @@
 				EA14B0AA271D6DBF000BF569 /* GiphyRecommendationPresenterTest.swift */,
 				EA14B0AC271D8468000BF569 /* GiphyRecommendationServiceTest.swift */,
 				EA14B0BE271DBC51000BF569 /* SwiftyCacheTest.swift */,
+				EA53793B272017F100230AB0 /* GiphyUtilityTest.swift */,
 				EA14B07D271831E5000BF569 /* Info.plist */,
 			);
 			path = InstantGiphySearchTests;
@@ -185,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				EA14B0B8271DB0AE000BF569 /* SessionUtility.swift */,
+				EA537939271FF94100230AB0 /* GiphyUtility.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -308,6 +314,7 @@
 				EA14B09B27185DE2000BF569 /* SwiftyCache.swift in Sources */,
 				EA14B097271838EF000BF569 /* GiphyInterfaces.swift in Sources */,
 				EA14B0A9271D4E75000BF569 /* GiphyRecommendationService.swift in Sources */,
+				EA53793A271FF94100230AB0 /* GiphyUtility.swift in Sources */,
 				EA14B0B6271D9717000BF569 /* GiphyDetailsService.swift in Sources */,
 				EA14B09927185B81000BF569 /* CacheManager.swift in Sources */,
 				EA14B067271831E2000BF569 /* SceneDelegate.swift in Sources */,
@@ -320,6 +327,7 @@
 			files = (
 				EA14B0BB271DB575000BF569 /* MockUrlProtocol.swift in Sources */,
 				EA14B0AB271D6DC0000BF569 /* GiphyRecommendationPresenterTest.swift in Sources */,
+				EA53793C272017F100230AB0 /* GiphyUtilityTest.swift in Sources */,
 				EA14B0BF271DBC51000BF569 /* SwiftyCacheTest.swift in Sources */,
 				EA14B0AD271D8468000BF569 /* GiphyRecommendationServiceTest.swift in Sources */,
 			);

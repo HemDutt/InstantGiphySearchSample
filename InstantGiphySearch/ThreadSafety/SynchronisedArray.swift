@@ -12,9 +12,7 @@ public class SynchronizedArray<T> {
     private let accessQueue = DispatchQueue(label: "SynchronizedArrayAccess", attributes: .concurrent)
 
     public func append(newElement: T) {
-        self.accessQueue.async(flags:.barrier) {
-            self.array.append(newElement)
-        }
+        self.append(newElements: [newElement])
     }
 
     public func append(newElements: [T]) {
@@ -68,6 +66,7 @@ public class SynchronizedArray<T> {
             }
         }
         get {
+            //Forced casting as it is reponsibility of caller to ensure out of bound index are not accessed.
             var element: T!
             self.accessQueue.sync {
                 element = self.array[index]

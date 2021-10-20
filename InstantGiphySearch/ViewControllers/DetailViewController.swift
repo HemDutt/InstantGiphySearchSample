@@ -9,8 +9,8 @@ import UIKit
 
 class DetailViewController: UIViewController{
 
-    @IBOutlet var textView: UITextView!
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var searchedText: String?
     var detailsPresenter: GiphyDetailPresenterProtocol?
 

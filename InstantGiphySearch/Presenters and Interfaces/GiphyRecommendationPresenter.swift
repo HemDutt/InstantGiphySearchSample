@@ -9,33 +9,41 @@ import Foundation
 
 class GiphyRecommendationPresenter : GiphyRecommendationPresenterProtocol{
     
-    func getGiphyRecommendationsFor(searchedText: String, giphyNetworkService:GiphyRecommendationServiceProtocol, cachedResults: @escaping ([GiphyStruct]) -> (), remoteResults: @escaping ([GiphyStruct]) -> Void) {
+    func getGiphyRecommendationsFor(searchedText: String, giphyNetworkService:GiphyRecommendationServiceProtocol, cachedResults: @escaping ([GiphyStruct], _ indeces:[IndexPath]) -> (), remoteResults: @escaping ([GiphyStruct], _ newIndeces:[IndexPath]) -> Void) {
         //Fetch recommendations from cache
-        let cachedItems = CacheManager.cache[searchedText] as? [GiphyStruct]
-        cachedResults(cachedItems ?? [])
+        let cachedItems = CacheManager.cache[searchedText]
+        if let cachedList = cachedItems as? [GiphyStruct], !cachedList.isEmpty{
+            let indeces = GiphyUtility.getnewIndecesAfter(initialCount: 0, newElementsCount: cachedList.count)
+            cachedResults(cachedList, indeces)
+        }
 
         //Fetch recommendations from remote
         giphyNetworkService.requestRecommendationsFor(searchedText: searchedText) { recommendations, error in
-            guard error == nil else{
+            guard error == nil, let remoteRecommendations = recommendations else{
                 //Do nothing for now.
                 //We can log and propagate error later
                 return
             }
+            let cachedResults = cachedItems as? [GiphyStruct] ?? []
+            var newElements = GiphyUtility.filterListForNewItemsOnly(oldList: cachedResults, newList: remoteRecommendations)
+            guard !newElements.isEmpty else {
+                //If no new results fetched fromm remote, no need to update VC or Cache.
+                return
+            }
 
-            CacheManager.cache[searchedText] = recommendations ?? []
-            remoteResults(recommendations ?? [])
+            //Update Cache
+            var consolidatedRecommendations = newElements + cachedResults
+            consolidatedRecommendations.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
+            let cost = GiphyUtility.getCostForInsertingGiphyRecommendations(list: consolidatedRecommendations)
+            //Clean old entries
+            CacheManager.cache.removeValue(forKey: searchedText)
+            //Store new values
+            CacheManager.cache.insert(consolidatedRecommendations, forKey: searchedText, insertionCost: cost)
+
+            //Update VC
+            newElements.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
+            let newIndeces = GiphyUtility.getnewIndecesAfter(initialCount: cachedResults.count, newElementsCount: newElements.count)
+            remoteResults(newElements, newIndeces)
         }
-    }
-
-    func filterListForNewItemsOnly(oldList : [GiphyStruct], newList : [GiphyStruct]) -> [GiphyStruct]{
-        return Array(Set(newList).subtracting(oldList))
-    }
-
-    func getnewIndecesAfter(initialCount: Int, newElementsCount: Int)->[IndexPath]{
-        var indeces : [IndexPath] = []
-        for index in 0..<newElementsCount{
-            indeces.append(IndexPath(row: index + initialCount, section: 0))
-        }
-        return indeces
     }
 }

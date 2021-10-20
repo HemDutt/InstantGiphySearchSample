@@ -10,15 +10,13 @@ import UIKit
 /// View Controller to allow search for a text and get recommendations from Giphy
 class RecommendationsViewController: UIViewController {
 
-    @IBOutlet var searchBar : UISearchBar!
-    @IBOutlet var tableView : UITableView!
+    @IBOutlet weak var searchBar : UISearchBar!
+    @IBOutlet weak var tableView : UITableView!
 
     var giphyPresenter : GiphyRecommendationPresenterProtocol?
 
     private var recommendations : SynchronizedArray<GiphyStruct> = SynchronizedArray()
-    //Serial queue to handle recommendations list update without conflict
-    private let accessQueue = DispatchQueue(label: "SynchronizedAccess")
-
+    private var latestSearchTimeStamp : String = ""
     private let cellIdentifier = "GiphyResultCell"
     // If user pause typing in search bar for time = searchInvocationWait, invoke fetch recommendation routine.
     private let searchInvocationWait = 0.2    //200 ms
@@ -57,90 +55,59 @@ class RecommendationsViewController: UIViewController {
     ///   - oldList: oldList in which newElements should be appended
     ///   - newElements: New recommendations for searchedText
     ///   - indeces: Indexes which needs to be inserted in table view for new recommendations
-    private func insertNewElementsFor(searchedText : String, oldList: [GiphyStruct], newElements: [GiphyStruct], indeces: [IndexPath]){
-        accessQueue.sync {[weak self] in
-            guard let self = self, self.recommendations.allItems() == oldList else{
-                //If old list do not match, discard the results.
+    private func insertNewElementsFor(searchedText : String, timeStamp: String, newElements: [GiphyStruct], indeces: [IndexPath]){
+        //Perform Batch updates
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self, timeStamp == self.latestSearchTimeStamp  else{
+                //If timestamp of searched text do not match with latestSearchTimeStamp, do not perform batch updates.
                 return
             }
-            //Perform UI operations
-            DispatchQueue.main.async { [self] in
-                guard searchedText == self.searchBar.text else{
-                    //If search bar's current text does not match with the text for which the fetch is perfomed, discard the results.
-                    return
-                }
-                self.tableView.performBatchUpdates({
-                    self.recommendations.append(newElements: newElements)
-                    self.tableView.insertRows(at: indeces, with: .automatic)
-                }, completion: nil)
+            self.recommendations.append(newElements: newElements)
+            self.tableView.performBatchUpdates {
+                self.tableView.insertRows(at: indeces, with: .automatic)
+            } completion: { success in
             }
         }
     }
 
     private func clearRecommendations(){
-        accessQueue.sync {[weak self] in
+        DispatchQueue.main.async {[weak self] in
             self?.recommendations.removeAll()
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
+            self?.tableView.reloadData()
         }
     }
 
     /// Fetch recommendations for searchedText if user pause typing in serach field for a configurable time = searchInvocationWait
     /// - Parameter searchedText: Text for which recommendations are requested
-    private func fetchAndLoadRecommendationsFor(searchedText: String){
+    private func fetchAndLoadRecommendationsFor(searchedText: String, timeStamp: String){
         DispatchQueue.main.asyncAfter(deadline: .now() + searchInvocationWait) {[weak self] in
-            guard let self = self, searchedText == self.searchBar.text, let presenter = self.giphyPresenter else{
+            guard let self = self, timeStamp == self.latestSearchTimeStamp, let presenter = self.giphyPresenter else{
+                //Discard searches with old timestamp.
                 return
             }
             //Clear old recommendations
             self.clearRecommendations()
-            guard searchedText.count > 0  else {
+            guard !searchedText.isEmpty else {
                 return
             }
             
             //Fetch recommendations
             let sessionConfig = SessionUtility.getDefaultSessionConfig()
             let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
-            var itemsAlreadyPopulated : [GiphyStruct] = []
-            presenter.getGiphyRecommendationsFor(searchedText: searchedText, giphyNetworkService: GiphyRecommendationService(session: session), cachedResults: { [weak self] cachedList in
-                guard let self = self else {
-                    return
-                }
-                self.insertNewElementsFrom(remoteList: cachedList, oldList: itemsAlreadyPopulated, searchedText: searchedText)
-                itemsAlreadyPopulated = cachedList
-
-            }) {[weak self] remoteList in
-                guard let self = self else{
-                    return
-                }
-                self.insertNewElementsFrom(remoteList: remoteList, oldList: itemsAlreadyPopulated, searchedText: searchedText)
-                itemsAlreadyPopulated = remoteList
+            presenter.getGiphyRecommendationsFor(searchedText: searchedText, giphyNetworkService: GiphyRecommendationService(session: session), cachedResults: { [weak self] cachedItems, indeces  in
+                self?.insertNewElementsFor(searchedText: searchedText, timeStamp: timeStamp, newElements: cachedItems, indeces: indeces)
+            }) {[weak self] remoteList, indeces  in
+                self?.insertNewElementsFor(searchedText: searchedText, timeStamp: timeStamp, newElements: remoteList, indeces: indeces)
             }
         }
     }
 
-    /// Prepare new elements in remote list for insertion in table view
-    /// - Parameters:
-    ///   - remoteList: Recommendations fetched from server
-    ///   - searchedText: Text for which recommendations are requested
-    private func insertNewElementsFrom(remoteList: [GiphyStruct], oldList: [GiphyStruct], searchedText: String){
-        guard let presenter = self.giphyPresenter else {
-            return
-        }
-        var newElements = presenter.filterListForNewItemsOnly(oldList: oldList, newList: remoteList)
-        guard newElements.count > 0 else {
-            return
-        }
-        newElements.sort(by: {$0.name.lowercased() < $1.name.lowercased()})
-
-        let newIndeces = presenter.getnewIndecesAfter(initialCount: oldList.count, newElementsCount: newElements.count)
-        self.insertNewElementsFor(searchedText: searchedText, oldList: oldList, newElements: newElements, indeces: newIndeces)
-    }
-
     private func navigateToDetailScreen(searchedText: String){
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let detailViewController = storyBoard.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        guard let detailViewController = storyBoard.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController else{
+            print("DetailViewController can't be instantiated")
+            return
+        }
         detailViewController.searchedText = searchedText
         detailViewController.detailsPresenter = GiphyDetailPresenter()
         self.navigationController?.pushViewController(detailViewController, animated: true)
@@ -150,11 +117,12 @@ class RecommendationsViewController: UIViewController {
 extension RecommendationsViewController: UISearchBarDelegate{
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        fetchAndLoadRecommendationsFor(searchedText: searchText)
+        latestSearchTimeStamp = GiphyUtility.getTimeStammp()
+        fetchAndLoadRecommendationsFor(searchedText: searchText, timeStamp: latestSearchTimeStamp)
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchedText = searchBar.text, searchedText.count > 0  else {
+        guard let searchedText = searchBar.text, !searchedText.isEmpty  else {
             return
         }
         navigateToDetailScreen(searchedText: searchedText)

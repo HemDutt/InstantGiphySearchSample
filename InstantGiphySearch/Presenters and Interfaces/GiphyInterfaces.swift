@@ -37,19 +37,7 @@ protocol GiphyRecommendationPresenterProtocol{
     ///   - giphyNetworkService: A service object to perform the remote fetch
     ///   - cachedResults: Recommendation list fetched from local cache
     ///   - remoteResults: Recommendation list fetched from remote server
-    func getGiphyRecommendationsFor(searchedText: String, giphyNetworkService:GiphyRecommendationServiceProtocol, cachedResults: @escaping ([GiphyStruct]) -> (), remoteResults: @escaping ([GiphyStruct]) -> Void)
-
-    /// Given 2 arrays, this function returns values from newList which are not present in oldList
-    /// - Parameters:
-    ///   - oldList: Old list containg objects of type GiphyStruct
-    ///   - newList: New list containg objects of type GiphyStruct
-    func filterListForNewItemsOnly(oldList : [GiphyStruct], newList : [GiphyStruct]) -> [GiphyStruct]
-
-    /// Return a list of indexes to be added at the bottom of table view while user is browsing through old recommendations
-    /// - Parameters:
-    ///   - initialCount: Count of elements currently showing on table view in ViewController
-    ///   - newElementsCount: Count of new elements which needs to be added on table view in ViewController
-    func getnewIndecesAfter(initialCount: Int, newElementsCount: Int)->[IndexPath]
+    func getGiphyRecommendationsFor(searchedText: String, giphyNetworkService:GiphyRecommendationServiceProtocol, cachedResults: @escaping ([GiphyStruct], _ indeces:[IndexPath]) -> (), remoteResults: @escaping ([GiphyStruct], _ newIndeces:[IndexPath]) -> Void)
 }
 
 /// GiphyRecommendationServiceProtocol declares function for a GiphyRecommendationService

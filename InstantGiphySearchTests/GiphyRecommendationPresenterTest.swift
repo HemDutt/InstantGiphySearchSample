@@ -17,38 +17,40 @@ class GiphyRecommendationPresenterTest: XCTestCase {
         }
     }
 
-    func testGetGiphyRecommendations() {
-        let cachedDataExpectation = expectation(description: "Check Giphy recommendations from cached data")
+    func testGetGiphyRecommendationsWithoutCache() {
+        //Not setting expectation for cached data as the block should not be called if no cached data available
         let remoteDataExpectation = expectation(description: "Check Giphy recommendations from remote data")
 
         let presenter = GiphyRecommendationPresenter()
-        presenter.getGiphyRecommendationsFor(searchedText: "Test", giphyNetworkService: MockGiphyRecommendationService()) { cachedResults in
+        presenter.getGiphyRecommendationsFor(searchedText: "SomeText", giphyNetworkService: MockGiphyRecommendationService()) { cachedResults, indeces in
             XCTAssertTrue(cachedResults.count == 0)
-            cachedDataExpectation.fulfill()
-        } remoteResults: { remoteResults in
+        } remoteResults: { remoteResults, indeces in
             XCTAssertTrue(remoteResults.count == 6)
             remoteDataExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 2, handler: nil)
     }
 
-    func testGetListOfNewItemsOnly() {
-        let cachedRecommendations = [GiphyStruct(name: "Tested1"), GiphyStruct(name: "Tested2")]
-        let remoteRecommendations = [GiphyStruct(name: "Tested1"), GiphyStruct(name: "Tested2"), GiphyStruct(name: "Tested3")]
+    func testGetGiphyRecommendationsWithCache() {
+        //Not setting expectation for cached data as the block should not be called if no cached data available
+        let list = [GiphyStruct(name: "CachedValue")]
+        let cost = GiphyUtility.getCostForInsertingGiphyRecommendations(list: list)
+        CacheManager.cache.insert(list, forKey: "Test", insertionCost:cost )
+
+        let remoteDataExpectation = expectation(description: "Check Giphy recommendations from remote data")
+        let cachedDataExpectation = expectation(description: "Check Giphy recommendations from cached data")
 
         let presenter = GiphyRecommendationPresenter()
-        let mergedRecommendations = presenter.filterListForNewItemsOnly(oldList: cachedRecommendations, newList: remoteRecommendations)
+        presenter.getGiphyRecommendationsFor(searchedText: "Test", giphyNetworkService: MockGiphyRecommendationService()) { cachedResults, indeces in
+            XCTAssertTrue(cachedResults.count == 1)
+            XCTAssertEqual(cachedResults, [GiphyStruct(name: "CachedValue")])
+            cachedDataExpectation.fulfill()
+        } remoteResults: { remoteResults, indeces in
+            XCTAssertTrue(remoteResults.count == 6)
+            remoteDataExpectation.fulfill()
+        }
 
-        XCTAssertTrue(mergedRecommendations.count == 1)
-        XCTAssertEqual(mergedRecommendations[0].name, "Tested3")
+        waitForExpectations(timeout: 2, handler: nil)
     }
-
-    func testGetnewIndeces() {
-        let presenter = GiphyRecommendationPresenter()
-        let indeces = presenter.getnewIndecesAfter(initialCount: 2, newElementsCount: 1)
-        XCTAssertEqual(indeces[0].row, 2)
-        XCTAssertEqual(indeces[0].section, 0)
-    }
-
 }
