@@ -14,7 +14,10 @@ protocol ViewBuilderProtocol {
 struct LaunchViewBuilder : ViewBuilderProtocol{
     func buildView() -> UIViewController? {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let recommendationsViewController = storyBoard.instantiateViewController(withIdentifier: "RecommendationsViewController") as! RecommendationsViewController
+        guard let recommendationsViewController = storyBoard.instantiateViewController(withIdentifier: "RecommendationsViewController") as? RecommendationsViewController else{
+            print("RecommendationsViewController can't be instantiated")
+            return nil
+        }
 
         let sessionConfig = SessionUtility.getDefaultSessionConfig()
         let session = URLSession(configuration: sessionConfig, delegate: nil, delegateQueue: nil)
